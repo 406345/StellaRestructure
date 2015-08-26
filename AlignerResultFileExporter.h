@@ -8,7 +8,7 @@ public:
 	AlignerResultFileExporter();
 	~AlignerResultFileExporter();
 
-	// Í¨¹ý IAlignerResultExporter ¼Ì³Ð
+	// inherit from IAlignerResultExporter
 	virtual void SetData(AlignerResult * result) override;
 	virtual void Export() override;
 };

@@ -6,7 +6,7 @@ public:
 	FastqReader();
 	~FastqReader();
 
-	// Í¨¹ý IDataReader ¼Ì³Ð
+	//inherit from IDataReader
 	virtual void Init() override;
 	virtual void SetData(void * data) override;
 	virtual void GetCount() override;
