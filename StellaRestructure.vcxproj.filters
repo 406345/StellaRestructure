@@ -51,6 +51,9 @@
     <ClInclude Include="IDataReader.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="FastqReader.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BasePair.cpp">
@@ -79,6 +82,12 @@
     </ClCompile>
     <ClCompile Include="AlignerResultFileExporter.cpp">
       <Filter>源文件\AlignerResultExporter</Filter>
+    </ClCompile>
+    <ClCompile Include="IDataReader.cpp">
+      <Filter>源文件\DataReader</Filter>
+    </ClCompile>
+    <ClCompile Include="FastqReader.cpp">
+      <Filter>源文件\DataReader</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
