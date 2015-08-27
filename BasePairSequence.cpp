@@ -21,19 +21,4 @@ void BasePairSequence::ReverseComplement()
 {
 }
 
-void BasePairSequence::CleanUpTokens()
-{
-}
-
-void BasePairSequence::ToUpperCase()
-{
-}
-
-void BasePairSequence::TrimByQuality()
-{
-}
-
-void BasePairSequence::ShapeAndClean()
-{
-}
  
