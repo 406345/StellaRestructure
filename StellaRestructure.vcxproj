@@ -143,29 +143,29 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="AlignerResultFileExporter.h" />
-    <ClInclude Include="BasePair.h" />
-    <ClInclude Include="BasePairAligner.h" />
-    <ClInclude Include="BasePairDifferenter.h" />
-    <ClInclude Include="BasePairLocator.h" />
+    <ClInclude Include="BasePairSequence.h" />
+    <ClInclude Include="BasePairSequenceAligner.h" />
+    <ClInclude Include="BasePairSequenceDifferenter.h" />
+    <ClInclude Include="BasePairSequenceLocator.h" />
     <ClInclude Include="FastqReader.h" />
-    <ClInclude Include="GenDataExporter.h" />
+    <ClInclude Include="GeneDataExporter.h" />
     <ClInclude Include="IAlignerResultExporter.h" />
     <ClInclude Include="IDataReader.h" />
-    <ClInclude Include="SharedGenData.h" />
+    <ClInclude Include="SharedGeneData.h" />
     <ClInclude Include="Stella.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AlignerResultFileExporter.cpp" />
-    <ClCompile Include="BasePair.cpp" />
-    <ClCompile Include="BasePairAligner.cpp" />
-    <ClCompile Include="BasePairDifferenter.cpp" />
-    <ClCompile Include="BasePairLocator.cpp" />
+    <ClCompile Include="BasePairSequence.cpp" />
+    <ClCompile Include="BasePairSequenceAligner.cpp" />
+    <ClCompile Include="BasePairSequenceDifferenter.cpp" />
+    <ClCompile Include="BasePairSequenceLocator.cpp" />
     <ClCompile Include="FastqReader.cpp" />
-    <ClCompile Include="GenDataExporter.cpp" />
+    <ClCompile Include="GeneDataExporter.cpp" />
     <ClCompile Include="IAlignerResultExporter.cpp" />
     <ClCompile Include="IDataReader.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="SharedGenData.cpp" />
+    <ClCompile Include="SharedGeneData.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

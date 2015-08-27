@@ -1,10 +1,6 @@
 #ifndef STELLA_STELLA_H_
 #define STELLA_STELLA_H_
 
-#include <memory>
-
-using namespace std;
-
 enum HResult
 {
 	kSUCCESS = 0,

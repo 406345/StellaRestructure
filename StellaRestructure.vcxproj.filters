@@ -21,25 +21,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BasePair.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="BasePairAligner.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="BasePairDifferenter.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="BasePairLocator.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="GenDataExporter.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="IAlignerResultExporter.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="SharedGenData.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Stella.h">
@@ -54,27 +36,27 @@
     <ClInclude Include="FastqReader.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="SharedGeneData.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneDataExporter.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="BasePairSequence.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="BasePairSequenceAligner.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="BasePairSequenceDifferenter.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="BasePairSequenceLocator.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="BasePair.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="BasePairAligner.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="BasePairDifferenter.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="BasePairLocator.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="GenDataExporter.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="SharedGenData.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="IAlignerResultExporter.cpp">
@@ -88,6 +70,24 @@
     </ClCompile>
     <ClCompile Include="FastqReader.cpp">
       <Filter>源文件\DataReader</Filter>
+    </ClCompile>
+    <ClCompile Include="SharedGeneData.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneDataExporter.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="BasePairSequence.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="BasePairSequenceAligner.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="BasePairSequenceDifferenter.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="BasePairSequenceLocator.cpp">
+      <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

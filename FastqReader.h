@@ -10,6 +10,8 @@ public:
 	virtual void Init() override;
 	virtual void SetData(void * data) override;
 	virtual void GetCount() override;
-	virtual BasePair * Next() override;
+	virtual BasePairSequence * Next() override;
+private:
+
 };
 

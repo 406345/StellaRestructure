@@ -23,7 +23,7 @@ void FastqReader::GetCount()
 {
 }
 
-BasePair * FastqReader::Next()
+BasePairSequence * FastqReader::Next()
 {
 	return nullptr;
 }

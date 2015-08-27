@@ -3,11 +3,11 @@
 
 #include "stella.h"
 
-class GenDataExporter
+class GeneDataExporter
 {
 public:
-	GenDataExporter();
-	~GenDataExporter();
+	GeneDataExporter();
+	~GeneDataExporter();
 
 	void ExportBasePairData(char* file_name, void* data);
 	void ExportDuplicate(char* file_name, void* data);

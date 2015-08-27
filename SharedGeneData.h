@@ -3,7 +3,7 @@
 
 #include "stella.h"
 
-class SharedGenData
+class SharedGeneData
 {
 public:
 	char* standard_gen;
@@ -13,22 +13,22 @@ public:
 	unsigned int* duplicates;
 	size_t duplicates_size;
 
-	~SharedGenData();
+	~SharedGeneData();
 	 
 	void Load(void* original_genome, void* base_pair, void* duplicate);
 
-	static SharedGenData* instance()
+	static SharedGeneData* instance()
 	{
 		if (!instance_)
 		{
-			instance_ = new SharedGenData();
+			instance_ = new SharedGeneData();
 		}
 		return instance_;
 	};
 private:
-	SharedGenData();
+	SharedGeneData();
 
-	static SharedGenData* instance_;
+	static SharedGeneData* instance_;
 };
 
 #endif //STELLA_SHARED_GEN_DATA_H_

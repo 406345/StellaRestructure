@@ -12,7 +12,7 @@ void IDataReader::GetCount()
 {
 }
 
-BasePair * IDataReader::Next()
+BasePairSequence * IDataReader::Next()
 {
 	return nullptr;
 }

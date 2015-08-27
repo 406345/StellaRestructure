@@ -6,21 +6,22 @@
 //TODO describes what it is for and how it should be used
 //genome sequence and its quality from a read in fastq file
 
-class BasePair
+class BasePairSequence
 {
 public:
 	//TODO whether get onwership from somewhere else
 	//TODO whether dynamic memory allocated
-	BasePair();
+	BasePairSequence();
 	
 	//TODO whether to manage any move or delete operations
-	~BasePair();
+	~BasePairSequence();
 	
 	//TODO 
 	void Init();
 	
 	//TODO do you mean get the reverse complements sequence as mapping phase1.2
-	void Reverse();
+	//make the sequence of the complementary strand
+	void ReverseComplement();
 	
 	//removes the blanks, or any '\n', '\r'
 	void CleanUpTokens();
@@ -34,10 +35,7 @@ public:
 
 	// Manages the operations and their order for process the sequence
 	void ShapeAndClean();
-
-	//get the sequence of the complementary strand
-	void GetReverseComplements();
-	
+	  
 	//sequence for quality
 	void* qual;
 	
