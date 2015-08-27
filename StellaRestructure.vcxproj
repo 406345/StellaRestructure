@@ -145,7 +145,7 @@
     <ClInclude Include="AlignerResultFileExporter.h" />
     <ClInclude Include="BasePairSequence.h" />
     <ClInclude Include="BasePairSequenceAligner.h" />
-    <ClInclude Include="BasePairSequenceDifferenter.h" />
+    <ClInclude Include="BasePairSequenceDifferencesDetector.h" />
     <ClInclude Include="BasePairSequenceLocator.h" />
     <ClInclude Include="FastqReader.h" />
     <ClInclude Include="GeneDataExporter.h" />
@@ -158,7 +158,7 @@
     <ClCompile Include="AlignerResultFileExporter.cpp" />
     <ClCompile Include="BasePairSequence.cpp" />
     <ClCompile Include="BasePairSequenceAligner.cpp" />
-    <ClCompile Include="BasePairSequenceDifferenter.cpp" />
+    <ClCompile Include="BasePairSequenceDifferencesDetector.cpp" />
     <ClCompile Include="BasePairSequenceLocator.cpp" />
     <ClCompile Include="FastqReader.cpp" />
     <ClCompile Include="GeneDataExporter.cpp" />
