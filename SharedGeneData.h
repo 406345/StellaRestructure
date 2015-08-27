@@ -1,3 +1,4 @@
+// Copyright (c) 2015 Yhgenomics. All rights reserved.
 #ifndef STELLA_SHARED_GEN_DATA_H_
 #define STELLA_SHARED_GEN_DATA_H_
 

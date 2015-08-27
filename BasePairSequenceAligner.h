@@ -1,3 +1,4 @@
+// Copyright (c) 2015 Yhgenomics. All rights reserved.
 #ifndef STELLA_BASE_PAIR_ALIGNER_H_
 #define STELLA_BASE_PAIR_ALIGNER_H_
 
@@ -5,6 +6,11 @@
 #include "BasePairSequence.h"
 #include "SharedGenedata.h"
 
+// manage the main pipeline for an analysis of a basepair
+// sequence,which means search for the position the may
+// matched in a ref-genome such as hg19.fa, and
+// ????
+// dterming the differences 
 class BasePairSequenceAligner
 {
 public:

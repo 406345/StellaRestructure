@@ -1,3 +1,4 @@
+// Copyright (c) 2015 Yhgenomics. All rights reserved.
 #ifndef STELLA_STELLA_H_
 #define STELLA_STELLA_H_
 

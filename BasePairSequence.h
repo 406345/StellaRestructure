@@ -1,40 +1,28 @@
+// Copyright (c) 2015 Yhgenomics. All rights reserved.
 #ifndef STELLA_BASE_PAIR_H_
 #define STELLA_BASE_PAIR_H_
 
 #include "stella.h"
 
-//TODO describes what it is for and how it should be used
-//genome sequence and its quality from a read in fastq file
-
+// BasePairSequence is the genome sequence and its quality 
+// from a read in fastq file. It should be loaded by some 
+// implements of IDataReader,the FastqReader for example,
+// and the transform works like reshaping and cleaning data
+// should be done by thus implements.
 class BasePairSequence
 {
 public:
-	//TODO whether get onwership from somewhere else
-	//TODO whether dynamic memory allocated
+	
+	// allocate sapce for genome sequences
 	BasePairSequence();
 	
-	//TODO whether to manage any move or delete operations
 	~BasePairSequence();
 	
-	//TODO 
+	// TODO non-trivial varialbes  
 	void Init();
 	
-	//TODO do you mean get the reverse complements sequence as mapping phase1.2
-	//make the sequence of the complementary strand
+	//generates the sequence for the complementary strand
 	void ReverseComplement();
-	
-	//removes the blanks, or any '\n', '\r'
-	void CleanUpTokens();
-
-	//makes all As, Cs, Gs, Ts and Ns to upper case 
-	void ToUpperCase();
-
-	//Cuts less Quality head and tail sequence off by a threshold
-	//TODO add a file for const variables such as this threshold
-	void TrimByQuality();
-
-	// Manages the operations and their order for process the sequence
-	void ShapeAndClean();
 	  
 	//sequence for quality
 	void* qual;
@@ -44,6 +32,7 @@ public:
 
 	size_t original_basepair_size;
 
+	//compressed in the same way to Hash table
 	unsigned int * codes;
 
 	size_t codes_size;
