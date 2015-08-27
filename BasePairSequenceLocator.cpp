@@ -17,7 +17,7 @@ void BasePairSequenceLocator::SetData(SharedGeneData * data)
 
 BasePairIndex * BasePairSequenceLocator::Search(unsigned code)
 {
-	tail_ = geneData_->base_pair_index_size() / sizeof(BasePairIndex);
+	tail_ = static_cast<int>(geneData_->base_pair_index_size()) / sizeof(BasePairIndex);
 	cur_ = tail_ >> 1;
 
 	do
