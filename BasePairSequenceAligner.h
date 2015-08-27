@@ -8,9 +8,9 @@
 
 // manage the main pipeline for an analysis of a basepair
 // sequence,which means search for the position the may
-// matched in a ref-genome such as hg19.fa, and
-// ????
-// dterming the differences 
+// matched in a ref-genome such as hg19.fa, abandon
+// postions with less possibility ,and then measure 
+// the differences 
 class BasePairSequenceAligner
 {
 public:
