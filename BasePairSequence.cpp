@@ -18,7 +18,7 @@ void BasePairSequence::Init()
 
 
 void BasePairSequence::ReverseComplement()
-{
+{ 
 }
 
  

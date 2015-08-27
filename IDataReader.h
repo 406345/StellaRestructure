@@ -5,8 +5,10 @@
 #include "Stella.h"
 #include "BasePairSequence.h"
 
-class IDataReader {
+class IDataReader 
+{
 public:
+
 	virtual void Init() = 0;
 	virtual void SetData(void* data) = 0;
 	virtual void GetCount() = 0;

@@ -11,6 +11,7 @@
 class AlignerResultFileExporter : public IAlignerResultExporter
 {
 public:
+
 	AlignerResultFileExporter();
 	~AlignerResultFileExporter();
 

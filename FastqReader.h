@@ -10,6 +10,7 @@
 class FastqReader : public IDataReader
 {
 public:
+
 	FastqReader();
 	~FastqReader();
 
@@ -18,6 +19,7 @@ public:
 	virtual void SetData(void * data) override;
 	virtual void GetCount() override;
 	virtual BasePairSequence * Next() override;
+
 private:
 
 	//removes the blanks, or any '\n', '\r'

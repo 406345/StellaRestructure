@@ -23,7 +23,7 @@ BasePairIndex * BasePairSequenceLocator::Search(unsigned code)
 	do
 	{
 		//gets the pointer from the shared memory
-		auto p = geneData_->base_pair_index()[cur_*sizeof(BasePairIndex)];
+		auto p = geneData_->base_pair_index()[cur_ * sizeof(BasePairIndex)];
 		//finds it and return the result
 		if (code == p->code) {
 			return p;
@@ -42,7 +42,7 @@ BasePairIndex * BasePairSequenceLocator::Search(unsigned code)
 			cur_ = cur_ >> 1;
 		}
 	} 
-	while (cur_ != tail_ && cur_ !=(tail_ -1));
+	while (cur_ != tail_ && cur_ !=(tail_ - 1));
 	
 	return nullptr;
 }

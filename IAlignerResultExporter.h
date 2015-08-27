@@ -10,6 +10,7 @@
 class IAlignerResultExporter
 {
 public:
+
 	virtual void SetData(AlignerResult* result) = 0;
 	virtual void Export() = 0;
 };

@@ -6,6 +6,7 @@
 class BasePairSequenceDifferenter
 {
 public:
+
 	BasePairSequenceDifferenter();
 	~BasePairSequenceDifferenter();
 };

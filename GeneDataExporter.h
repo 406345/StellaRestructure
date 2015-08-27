@@ -8,11 +8,12 @@
 class GeneDataExporter
 {
 public:
+
 	GeneDataExporter();
 	~GeneDataExporter();
 
-	void ExportBasePairData(char* file_name, void* data);
-	void ExportDuplicate(char* file_name, void* data);
+	void ExportBasePairData(const char* file_name, void* data);
+	void ExportDuplicate(const char* file_name, void* data);
 };
 
 #endif //STELLA_GEN_DATA_EXPORTER_H_

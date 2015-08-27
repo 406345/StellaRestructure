@@ -14,6 +14,7 @@
 class BasePairSequenceAligner
 {
 public:
+
 	BasePairSequenceAligner();
 	~BasePairSequenceAligner();
 
