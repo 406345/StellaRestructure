@@ -48,10 +48,10 @@
     <ClInclude Include="BasePairSequenceAligner.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="BasePairSequenceDifferenter.h">
+    <ClInclude Include="BasePairSequenceLocator.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="BasePairSequenceLocator.h">
+    <ClInclude Include="BasePairSequenceDifferencesDetector.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
@@ -83,10 +83,10 @@
     <ClCompile Include="BasePairSequenceAligner.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="BasePairSequenceDifferenter.cpp">
+    <ClCompile Include="BasePairSequenceLocator.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="BasePairSequenceLocator.cpp">
+    <ClCompile Include="BasePairSequenceDifferencesDetector.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
