@@ -17,10 +17,6 @@ void BasePairSequence::Init()
 }
 
 
-void BasePairSequence::Reverse()
-{
-}
-
 void BasePairSequence::ReverseComplement()
 {
 }
@@ -38,10 +34,6 @@ void BasePairSequence::TrimByQuality()
 }
 
 void BasePairSequence::ShapeAndClean()
-{
-}
-
-void BasePairSequence::GetReverseComplements()
 {
 }
  
