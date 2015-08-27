@@ -42,7 +42,7 @@ BasePairIndex * BasePairSequenceLocator::Search(unsigned code)
 			cur_ = cur_ >> 1;
 		}
 	} 
-	while (cur_ != tail_ && cur_ !=(tail_ - 1));
+	while (cur_>0 && cur_ != tail_ && cur_ !=(tail_ - 1));
 	
 	return nullptr;
 }

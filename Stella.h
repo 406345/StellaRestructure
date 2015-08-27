@@ -2,6 +2,8 @@
 #ifndef STELLA_STELLA_H_
 #define STELLA_STELLA_H_
 
+const int MAXBASEPAIRLINELENGTH = 500;
+
 enum HResult
 {
 	kSUCCESS = 0,
