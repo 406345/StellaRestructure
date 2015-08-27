@@ -4,9 +4,7 @@
 
 #include "Stella.h"
 
-/*
-	Result export interface
-*/
+//	Result export interface
 class IAlignerResultExporter
 {
 public:

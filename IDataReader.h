@@ -5,6 +5,7 @@
 #include "Stella.h"
 #include "BasePairSequence.h"
 
+// Data Input interface
 class IDataReader 
 {
 public:

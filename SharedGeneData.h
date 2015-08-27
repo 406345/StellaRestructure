@@ -4,6 +4,9 @@
 
 #include "stella.h"
 
+// Three files that can be shared between Process: original
+// ref-genome file, compressed and ordered ref-genome file,
+// duplicates file. 
 class SharedGeneData
 {
 public:

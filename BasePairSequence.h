@@ -1,8 +1,7 @@
 // Copyright (c) 2015 Yhgenomics. All rights reserved.
+// Description:  class for genome sequence from fastq file
 #ifndef STELLA_BASE_PAIR_H_
 #define STELLA_BASE_PAIR_H_
-
-#include "stella.h"
 
 // BasePairSequence is the genome sequence and its quality 
 // from a read in fastq file. It should be loaded by some 

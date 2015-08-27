@@ -1,4 +1,5 @@
 // Copyright (c) 2015 Yhgenomics. All rights reserved.
+// Description:  Exporter Class for Aligner reasult
 #ifndef STELLA_ALIGNER_RESULT_FILE_EXPORTER_H_
 #define STELLA_ALIGNER_RESULT_FILE_EXPORTER_H_
 

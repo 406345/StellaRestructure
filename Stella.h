@@ -1,4 +1,5 @@
 // Copyright (c) 2015 Yhgenomics. All rights reserved.
+// Description:  configuration file for global variables
 #ifndef STELLA_STELLA_H_
 #define STELLA_STELLA_H_
 
