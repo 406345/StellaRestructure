@@ -12,12 +12,15 @@
 class BasePairSequenceLocator
 {
 public:
+
 	BasePairSequenceLocator();
 	~BasePairSequenceLocator();
 
 	void SetData(SharedGeneData* data);
 	BasePairIndex* Search(unsigned code);
+
 private:
+
 	SharedGeneData* geneData_;
 	int tail_;
 	int cur_;
