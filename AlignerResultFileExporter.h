@@ -7,7 +7,6 @@
 // Aligner result is the target result stella is running
 // for, this class get AlignerResult and Export it in a
 // friendly format to the end-user
-
 class AlignerResultFileExporter : public IAlignerResultExporter
 {
 public:
