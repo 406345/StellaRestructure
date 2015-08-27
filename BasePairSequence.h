@@ -19,14 +19,17 @@ public:
 	
 	// TODO non-trivial varialbes  
 	void Init();
+	
 	//generates the sequence for the complementary strand
 	void ReverseComplement();
 	
 	//getter for sequence for quality 
 	void const* qual() { return qual_; }
+	
 	//getter for sequence based on As, Cs, Gs, Ts and Ns
 	void const* original_basepair() { return original_basepair_; }
 	size_t original_basepair_size() { return original_basepair_size_; }
+	
 	//getter for compressed in the same way to Hash table
 	unsigned int const* codes() { return codes_; }
 	size_t codes_size(){ return codes_size_; }

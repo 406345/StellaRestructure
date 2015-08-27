@@ -9,33 +9,25 @@
 
 using namespace std;
 
-//template for something....god knows
-template<typename T> class matrix {
+template<typename T> 
+class matrix 
+{
 private:
+
 	int dim_x = 0;
 	int dim_y = 0;
-	T* buf;
-private:
-	/*
-	matrix(){
-	this->dim_x = MAX_READ_LENGTH;
-	this->dim_y = MAX_READ_LENGTH;
-	int size = this->dim_x*this->dim_y;
-	buf = (T*) malloc(size*sizeof(T));
-	std::memset(buf, 0, size*sizeof(T));
-	}*/
-	matrix(int _dimx, int _dimy) {
+	T* buf;	 
+	matrix(int _dimx, int _dimy)
+	{
 		this->dim_x = _dimx;
 		this->dim_y = _dimy;
 		int size = this->dim_x*this->dim_y;
 		buf = (T*)malloc(size*sizeof(T));
 		std::memset(buf, 0, size*sizeof(T));
 	}
-	/*
-	~matrix(){
-	std::free(buf);
-	}*/
+
 public:
+
 	~matrix() {}
 	matrix() { buf = 0; }
 
@@ -45,24 +37,24 @@ public:
 		buf = _buf;
 	}
 
-	// reset the ram
+	// Reset the ram
 	inline void clear(unsigned char _value = 0) {
-		std::memset(buf, _value, this->dim_x*this->dim_y*sizeof(T));
+		std::memset(buf, _value, this->dim_x * this->dim_y * sizeof(T));
 	}
 
-	// return the reference of a element
+	// Return the reference of a element
 	inline T& get(int _x, int _y) {
-		return buf[_x*this->dim_y + _y];
+		return buf[_x * this->dim_y + _y];
 	}
 
 	inline T& operator() (const int& _x, const int& _y) {
-		return buf[_x*this->dim_y + _y];
+		return buf[_x * this->dim_y + _y];
 	}
 };
 
 
 
-// detectes the differences of two base pair sequences
+// Detectes the differences of two base pair sequences
 // Needleman¨CWunsch algorithm
 class BasePairSequenceDifferencesDetector
 {
@@ -81,7 +73,8 @@ public:
 private:
 
 	string seqW = "*ACGTN";	// Nucleotides
-	int imut[6][6] = { 1,0,0,0,0,0,
+	int imut[6][6] = {
+		1,0,0,0,0,0,
 		0,1,0,0,0,0,
 		0,0,1,0,0,0,
 		0,0,0,1,0,0,
@@ -100,7 +93,5 @@ private:
 	int seq2[MAX_BP_LINE_LENGTH];
 	int j2i[MAX_BP_LINE_LENGTH]; 
 };
-
-
 
 #endif //STELLA_BASE_PAIR_DIFFERENTER_H_

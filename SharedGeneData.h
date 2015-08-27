@@ -35,6 +35,7 @@ public:
 	};
 
 private:
+
 	SharedGeneData();
 
 	static SharedGeneData* instance_;

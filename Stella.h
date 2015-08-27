@@ -6,6 +6,7 @@
 #define SAFE_DELETE(__x__) if(__x__ != nullptr) delete __x__
 
 const int MAX_BP_LINE_LENGTH = 300;
+const int MAX_BP_LEN = 10;
 
 enum HResult
 {
@@ -16,9 +17,8 @@ enum HResult
 struct BasePairIndex
 {
 	unsigned int code;
-	unsigned long refPos;
-	unsigned int offset;
-	int count;
+	size_t offset;
+	size_t count;
 };
 
 struct BasePairDiffMaker
@@ -36,12 +36,12 @@ struct AlignerResult {
 };
 
 const unsigned int BitCodes[60] = \
-/* A   B   C    D  E, F, G    H   I   J  K  L  M  N  O  P  Q  R  S  T    U  V  W  X  Y  Z */ \
-{0b00, 0, 0b01, 0, 0, 0, 0b10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0b11, 0, 0, 0, 0, 0, 0,
-/*  [  \  ]  ^  _  `  */
-0, 0, 0, 0, 0, 0,
-/* a   b   c    d  e, f, g    h   i   j  k  l  m  n  o  p  q  r  s  t    u  v  w  x  y  z */
-0b00, 0, 0b01, 0, 0, 0, 0b10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0b11, 0, 0, 0, 0, 0, 0
+	/* A   B   C    D  E, F, G    H   I   J  K  L  M  N  O  P  Q  R  S  T    U  V  W  X  Y  Z */ \
+	{0b00, 0, 0b01, 0, 0, 0, 0b10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0b11, 0, 0, 0, 0, 0, 0,
+	/*  [  \  ]  ^  _  `  */
+	0, 0, 0, 0, 0, 0,
+	/* a   b   c    d  e, f, g    h   i   j  k  l  m  n  o  p  q  r  s  t    u  v  w  x  y  z */
+	0b00, 0, 0b01, 0, 0, 0, 0b10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0b11, 0, 0, 0, 0, 0, 0
 };
 
 

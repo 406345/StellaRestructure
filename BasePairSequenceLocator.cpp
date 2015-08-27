@@ -22,23 +22,26 @@ BasePairIndex * BasePairSequenceLocator::Search(unsigned code)
 
 	do
 	{
-		//gets the pointer from the shared memory
+		// Gets the pointer from the shared memory
 		auto p = geneData_->base_pair_index()[cur_ * sizeof(BasePairIndex)];
-		//finds it and return the result
+		
+		// Finds it and return the result
 		if (code == p->code) {
 			return p;
 		}
-		//result maybe on the right leaf
-		//find it
+		
+		// Result maybe on the right leaf
+		// Find it
 		else if(code > p->code){
 			//(tail_ - cur_) / 2
 			cur_ += ((tail_ - cur_) >> 1);
 		}
-		//result maybe on the left leaf
-		//find it
+		
+		// Result maybe on the left leaf
+		// Find it
 		else {
 			tail_ = cur_;
-			//cur_ / 2
+			// cur_ / 2
 			cur_ = cur_ >> 1;
 		}
 	} 
