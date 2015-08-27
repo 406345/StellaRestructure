@@ -1,12 +1,12 @@
-#include "BasePairSequenceDifferenter.h"
+#include "BasePairSequenceDifferencesDetector.h"
 
 
 
-BasePairSequenceDifferenter::BasePairSequenceDifferenter()
+BasePairSequenceDifferencesDetector::BasePairSequenceDifferencesDetector()
 {
 }
 
 
-BasePairSequenceDifferenter::~BasePairSequenceDifferenter()
+BasePairSequenceDifferencesDetector::~BasePairSequenceDifferencesDetector()
 {
 }
