@@ -43,6 +43,8 @@ void GeneDataExporter::ExportBasePairData(const char * file_name, void * data, s
 
                 code_pos_map_[code].push_back(i);
                 code = 0;
+
+                code_len = 0;
             }
         }
     }
