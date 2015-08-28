@@ -7,6 +7,7 @@
 #include "BasePairSequence.h"
 #include "BasePairSequenceAligner.h"
 
+//#define YSB_DEBUG
 //#define TEST_BY_BIGCAT
 #ifdef TEST_BY_BIGCAT
 
@@ -20,6 +21,12 @@ void Run(char* genome_file, char* base_pair, char* duplicate_file, char* input_f
 
 int main(int argc, char* argv[]) 
 {
+#ifdef YSB_DEBUG
+    printf("BasePairIndex size :%d\r\n", sizeof(BasePairIndex));
+    printf("unsigned in size :%d\r\n", sizeof(unsigned int));
+    printf("size_t size :%d\r\n", sizeof(size_t));
+    scanf("");
+#endif
     if (5 == argc && argv[1][0] == 'e')
     {
         // Argv[1] == e
@@ -74,8 +81,7 @@ int main(int argc, char* argv[])
 
 void Run(char* genome_file, char* base_pair, char* duplicate_file, char* input_file) 
 {
-    printf("BasePairIndex size :%d",sizeof(BasePairIndex));
-
+    
     // Load static data 
     SharedGeneData::instance()->LoadFromFile(genome_file, base_pair, duplicate_file);
 

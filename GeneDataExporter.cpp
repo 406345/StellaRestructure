@@ -38,7 +38,7 @@ void GeneDataExporter::ExportBasePairData(const char * file_name, void * data, s
         {
             char value = pcur[i];
             code += (BitCodes[value - 'A'] << (code_len * CODE_LEN));
-
+            code_len++;
             if (code_len == MAX_BP_LEN)
             {
                 
@@ -51,16 +51,12 @@ void GeneDataExporter::ExportBasePairData(const char * file_name, void * data, s
                 code = 0;
 
                 code_len = 0;
-            }
-            else
-            {
-                code_len++;
-            }
+            } 
         }
     }
 
     FILE* pfile;
-    auto error = fopen_s(&pfile, file_name, "w+");
+    auto error = fopen_s(&pfile, file_name, "wb+");
 
     if (error) {
 #ifdef DEBUG
@@ -69,22 +65,21 @@ void GeneDataExporter::ExportBasePairData(const char * file_name, void * data, s
         return;
     }
 
-    BasePairIndex index;
     size_t offset = 0;
     size_t count = static_cast<size_t>(code_pos_map_.size());
 
     fwrite(&count, sizeof(size_t), 1, pfile);
 
-    for (std::map<int, vector<size_t>>::iterator iter = code_pos_map_.begin(); iter != code_pos_map_.end(); iter++)
+    for each (auto& kv in code_pos_map_)
     {
-        auto kv = *iter;
+        BasePairIndex index;
 
         index.code = kv.first;
         index.count = static_cast<size_t>(kv.second.size());
         index.offset = offset;
-        offset += kv.second.size();
-
+        
         fwrite(&index, sizeof(BasePairIndex), 1, pfile);
+        offset += kv.second.size();
     }
 
     fclose(pfile);
@@ -93,7 +88,7 @@ void GeneDataExporter::ExportBasePairData(const char * file_name, void * data, s
 void GeneDataExporter::ExportDuplicate(const char * file_name)
 {
     FILE* pfile;
-    auto error = fopen_s(&pfile,file_name, "w+");
+    auto error = fopen_s(&pfile,file_name, "wb+");
     
     if (error) {
 #ifdef DEBUG

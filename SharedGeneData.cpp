@@ -33,7 +33,7 @@ void SharedGeneData::LoadFromFile(const char * genome_file, const char * base_pa
     genome_size = bp_size = duplicate_size = 0;
 
     // Open genome file
-    auto error = fopen_s(&file_genome, genome_file, "r");
+    auto error = fopen_s(&file_genome, genome_file, "rb");
 
     if (error) 
     { 
@@ -44,7 +44,7 @@ void SharedGeneData::LoadFromFile(const char * genome_file, const char * base_pa
     }
 
     // Open base pair file
-    error = fopen_s(&file_bp, base_pair_file, "r");
+    error = fopen_s(&file_bp, base_pair_file, "rb");
 
     if (error) 
     { 
@@ -55,7 +55,7 @@ void SharedGeneData::LoadFromFile(const char * genome_file, const char * base_pa
     }
 
     // Open dupcate file
-    error = fopen_s(&file_duplicate, duplicate_file, "r");
+    error = fopen_s(&file_duplicate, duplicate_file, "rb");
 
     if (error) 
     { 
@@ -73,26 +73,25 @@ void SharedGeneData::LoadFromFile(const char * genome_file, const char * base_pa
     fseek(file_genome, 0, SEEK_SET);
 
     // Read basepair count from head
-    // 0x0 - 0x7 count (sizeof(size_t), 4 byte for x86, 8byte for x64)
+    // 0x0 - 0x7 count (sizeof(size_t), 4 byte for x86, 8 byte for x64)
     // 0x8 - N structs
     fread_s(&bp_size, sizeof(size_t), sizeof(size_t), 1, file_bp);
 
     // Read duplicate count from head
-    // 0x0 - 0x7 count (sizeof(size_t), 4 byte for x86, 8byte for x64)
+    // 0x0 - 0x7 count (sizeof(size_t), 4 byte for x86, 8 byte for x64)
     // 0x8 - N unsigned int * N
     fread_s(&duplicate_size, sizeof(size_t), sizeof(size_t), 1, file_duplicate);
 
     // Copy file to memory
     void* buf_genome = (void*) new char[genome_size]();
     fread(buf_genome, sizeof(char), genome_size, file_genome);
-
     // Copy file to memory
-    void* buf_bp = (void*)new char[bp_size * sizeof(BasePairIndex)]();
-    fread(buf_bp, sizeof(BasePairIndex), bp_size, file_bp);
+    BasePairIndex* buf_bp = new BasePairIndex[bp_size]();
+    fread_s(buf_bp, sizeof(BasePairIndex)*bp_size, sizeof(BasePairIndex), bp_size, file_bp);
 
     // Copy file to memory
     void* buf_duplicate = (void*)new size_t[duplicate_size]();
-    fread(buf_bp, sizeof(size_t), duplicate_size, file_duplicate);
+    fread(buf_duplicate, sizeof(size_t), duplicate_size, file_duplicate);
 
     this->Load(genome_size, buf_genome, bp_size, buf_bp, duplicate_size, buf_duplicate);
 }
