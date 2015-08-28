@@ -1,6 +1,8 @@
 #ifndef STELLA_BASE_PAIR_CODE_SAMPLE_H_
 #define STELLA_BASE_PAIR_CODE_SAMPLE_H_
 
+#include "Stella.h"
+
 class BasePairCodeSample
 {
 public:
