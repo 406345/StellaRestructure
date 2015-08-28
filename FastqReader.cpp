@@ -164,7 +164,7 @@ void FastqReader::GenerateCurrentRead()
     current_read_->set_original_basepair(tmp_genome_sequence_);
     current_read_->set_qual(tmp_qual_sequence_);
     current_read_->set_read_name(tmp_read_name_);
-    current_read_->set_original_basepair_size(tmp_genome_sequence_)
+    current_read_->set_original_basepair_size(tmp_genome_sequence_->length());
 }
 
 
