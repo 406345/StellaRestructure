@@ -7,7 +7,7 @@
 #include "BasePairSequence.h"
 #include "BasePairSequenceAligner.h"
 
-#define TEST_BY_BIGCAT
+//#define TEST_BY_BIGCAT
 #ifdef TEST_BY_BIGCAT
 
 #include "FastqReader.h"
@@ -71,6 +71,8 @@ int main(int argc, char* argv[])
 
 void Run(char* genome_file, char* base_pair, char* duplicate_file, char* input_file) 
 {
+    printf("BasePairIndex size :%d",sizeof(BasePairIndex));
+
     // Load static data 
     SharedGeneData::instance()->LoadFromFile(genome_file, base_pair, duplicate_file);
 
@@ -95,6 +97,5 @@ void Run(char* genome_file, char* base_pair, char* duplicate_file, char* input_f
 
     } 
     while (1);
-
 
 }

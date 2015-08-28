@@ -19,7 +19,7 @@ void SharedGeneData::Load(size_t genome_size, void * original_genome, size_t bas
     this->standard_gen_ = static_cast<char*> (original_genome);
 
     this->base_pair_index_size_ = base_pair_size;
-    this->base_pair_index_ = static_cast<BasePairIndex**>(base_pair);
+    this->base_pair_index_ = static_cast<BasePairIndex*>(base_pair);
 
     this->duplicates_size_ = duplicate_size;
     this->duplicates_ = (unsigned int*)duplicate;
@@ -29,6 +29,8 @@ void SharedGeneData::LoadFromFile(const char * genome_file, const char * base_pa
 {
     FILE * file_genome, * file_bp, * file_duplicate;
     size_t genome_size, bp_size, duplicate_size;
+
+    genome_size = bp_size = duplicate_size = 0;
 
     // Open genome file
     auto error = fopen_s(&file_genome, genome_file, "r");
@@ -65,7 +67,7 @@ void SharedGeneData::LoadFromFile(const char * genome_file, const char * base_pa
 
     // Seek to end to read the length of file
     fseek(file_genome, 0, SEEK_END);
-    genome_size = static_cast<size_t>(ftell(file_genome));
+    genome_size = static_cast<size_t>(_ftelli64(file_genome));
 
     // Reset the file position
     fseek(file_genome, 0, SEEK_SET);
@@ -85,12 +87,12 @@ void SharedGeneData::LoadFromFile(const char * genome_file, const char * base_pa
     fread(buf_genome, sizeof(char), genome_size, file_genome);
 
     // Copy file to memory
-    void* buf_bp = (void*)new char[bp_size]();
-    fread(buf_bp, sizeof(char), bp_size, file_bp);
+    void* buf_bp = (void*)new char[bp_size * sizeof(BasePairIndex)]();
+    fread(buf_bp, sizeof(BasePairIndex), bp_size, file_bp);
 
     // Copy file to memory
-    void* buf_duplicate = (void*)new char[duplicate_size]();
-    fread(buf_bp, sizeof(char), duplicate_size, file_duplicate);
+    void* buf_duplicate = (void*)new size_t[duplicate_size]();
+    fread(buf_bp, sizeof(size_t), duplicate_size, file_duplicate);
 
     this->Load(genome_size, buf_genome, bp_size, buf_bp, duplicate_size, buf_duplicate);
 }

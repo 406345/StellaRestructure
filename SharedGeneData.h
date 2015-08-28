@@ -19,7 +19,7 @@ public:
     
     char const * standard_gen() { return standard_gen_; }
     size_t standard_gen_size() { return standard_gen_size_; }
-    BasePairIndex ** base_pair_index() { return base_pair_index_; }
+    BasePairIndex * base_pair_index() { return base_pair_index_; }
     size_t base_pair_index_size() { return base_pair_index_size_; }
     unsigned int const * duplicates() { return duplicates_; }
     size_t duplicates_size() { return duplicates_size_; };
@@ -44,7 +44,7 @@ private:
 
     char* standard_gen_;
     size_t standard_gen_size_;
-    BasePairIndex** base_pair_index_;
+    BasePairIndex* base_pair_index_;
     size_t base_pair_index_size_;
     unsigned int* duplicates_;
     size_t duplicates_size_;

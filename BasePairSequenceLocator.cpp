@@ -17,15 +17,15 @@ void BasePairSequenceLocator::SetData(SharedGeneData * data)
 
 BasePairIndex * BasePairSequenceLocator::Search(unsigned code)
 {
-    tail_ = static_cast<int>(geneData_->base_pair_index_size()) / sizeof(BasePairIndex);
+    tail_ = static_cast<size_t>(geneData_->base_pair_index_size());
     cur_ = tail_ >> 1;
 
-    do
+    while (cur_ != tail_)
     {
         // Gets the pointer from the shared memory
-        auto p = geneData_->base_pair_index()[cur_ * sizeof(BasePairIndex)];
+        auto p = (geneData_->base_pair_index()+ cur_);
         
-        // Finds it and return the result
+        // Check code and return the result
         if (code == p->code) 
         {
             return p;
@@ -36,11 +36,10 @@ BasePairIndex * BasePairSequenceLocator::Search(unsigned code)
         else if(code > p->code)
         {
             //(tail_ - cur_) / 2
-            cur_ += ((tail_ - cur_) >> 1);
+            cur_ += ((tail_ - cur_ + 1) >> 1);
         }
         
-        // The result maybe on the left leaf
-        // Find it
+        // The result maybe on the left leaf, find it
         else 
         {
             tail_ = cur_;
@@ -48,7 +47,6 @@ BasePairIndex * BasePairSequenceLocator::Search(unsigned code)
             cur_ = cur_ >> 1;
         }
     } 
-    while (cur_>0 && cur_ != tail_ && cur_ !=(tail_ - 1));
     
     return nullptr;
 }

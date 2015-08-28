@@ -22,8 +22,8 @@ public:
 private:
 
     SharedGeneData* geneData_;
-    int tail_;
-    int cur_;
+    size_t tail_;
+    size_t cur_;
 };
 
 #endif //BASE_PAIR_LOCATOR_H_

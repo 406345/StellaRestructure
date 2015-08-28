@@ -71,16 +71,16 @@ void GeneDataExporter::ExportBasePairData(const char * file_name, void * data, s
 
     BasePairIndex index;
     size_t offset = 0;
-    int count = static_cast<int>(code_pos_map_.size());
+    size_t count = static_cast<size_t>(code_pos_map_.size());
 
-    fwrite(&count, sizeof(int), 1, pfile);
+    fwrite(&count, sizeof(size_t), 1, pfile);
 
     for (std::map<int, vector<size_t>>::iterator iter = code_pos_map_.begin(); iter != code_pos_map_.end(); iter++)
     {
         auto kv = *iter;
 
         index.code = kv.first;
-        index.count = static_cast<int>(kv.second.size());
+        index.count = static_cast<size_t>(kv.second.size());
         index.offset = offset;
         offset += kv.second.size();
 
