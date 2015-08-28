@@ -78,8 +78,8 @@ void FastqReader::TrimByQuality()
         if ((*tmp_qual_sequence_)[end] > QUAL_CUTOFF
             && (*tmp_qual_sequence_)[end - 1] > QUAL_CUTOFF)
         {
-            (*tmp_qual_sequence_) = (*tmp_qual_sequence_).substr(0, end);
-            (*tmp_genome_sequence_) = (*tmp_genome_sequence_).substr(0, end);
+            (*tmp_qual_sequence_) = (*tmp_qual_sequence_).substr(0, end + 1);
+            (*tmp_genome_sequence_) = (*tmp_genome_sequence_).substr(0, end + 1);
             
             break;
         }
@@ -92,8 +92,8 @@ void FastqReader::TrimByQuality()
         (*tmp_genome_sequence_) = (*tmp_genome_sequence_).substr(0, end);
     }
 
-    size_t beg = 1;
-    for (; beg <= (*tmp_qual_sequence_).size() - 1; beg++)
+    size_t beg = 0;
+    for (; beg <= (*tmp_qual_sequence_).size() - 2; beg++)
     {
         if ((*tmp_qual_sequence_)[beg] > QUAL_CUTOFF
             && (*tmp_qual_sequence_)[beg + 1] > QUAL_CUTOFF) 
