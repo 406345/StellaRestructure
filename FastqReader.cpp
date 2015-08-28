@@ -71,6 +71,7 @@ void FastqReader::ToUpperCase()
 // Trim by QUAL_CUTOFF defined in stella.h
 void FastqReader::TrimByQuality()
 {
+    // TODO re-write this with a more expressive way
     size_t end = (*tmp_qual_sequence_).size() - 1;
 
     for (; end >= 1; end--)

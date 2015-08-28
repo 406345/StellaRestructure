@@ -59,8 +59,11 @@ int main(int argc, char* argv[])
     test_reader.SetData("F:\\STELLADATA\\handmake.fastq");
     BasePairSequence * testbps = test_reader.Next();
     BasePairCodeSample testcode;
+    for (int i = 0; i < MAX_BP_LEN;i++)
+    {
     testbps->ReadCode(&testcode);
-
+    }
+    system("pause");
     //AlignerResultFileExporter test_exporter;
     //AlignerResult test_aligner_result;
     
