@@ -1,5 +1,9 @@
 // Copyright (c) 2015 Yhgenomics. All rights reserved.
 // Description:  class for genome sequence from fastq file
+// Creator: Shubo Yang
+// Date: 2015/08/27
+// Modified by Ke Yang 2015/08/28
+
 #ifndef STELLA_BASE_PAIR_H_
 #define STELLA_BASE_PAIR_H_
 

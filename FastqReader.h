@@ -1,4 +1,9 @@
 // Copyright (c) 2015 Yhgenomics. All rights reserved.
+// Description:  Reads genome sequence from fastq file
+// Creator: Shubo Yang
+// Date: 2015/08/27
+// Modified by Ke Yang 2015/08/28
+
 #ifndef STELLA_FASTQ_READER_H_
 #define STELLA_FASTQ_READER_H_
 

@@ -68,7 +68,7 @@ void FastqReader::ToUpperCase()
 // Trim by QUAL_CUTOFF defined in stella.h
 void FastqReader::TrimByQuality()
 {
-    int end = (*tmp_qual_sequence_).size() - 1;
+    size_t end = (*tmp_qual_sequence_).size() - 1;
     for (; end >= 1; end--)
     {
         if ((*tmp_qual_sequence_)[end] > QUAL_CUTOFF
@@ -85,7 +85,7 @@ void FastqReader::TrimByQuality()
         (*tmp_genome_sequence_) = (*tmp_genome_sequence_).substr(0, end);
     }
 
-    int beg = 1;
+    size_t beg = 1;
     for (; beg <= (*tmp_qual_sequence_).size() - 1; beg++) {
         if ((*tmp_qual_sequence_)[beg] > QUAL_CUTOFF
             && (*tmp_qual_sequence_)[beg + 1] > QUAL_CUTOFF) {

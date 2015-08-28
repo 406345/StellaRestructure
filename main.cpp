@@ -12,7 +12,9 @@ int main(int argc, char* argv[])
     FastqReader test_reader;
     test_reader.Init();
     test_reader.SetData("F:\\STELLADATA\\test.fastq");
-    test_reader.Next();
+    BasePairSequence * testbps = test_reader.Next();
+    BasePairCodeSample testcode;
+    testbps->ReadCode(&testcode);
 #endif
 
 
