@@ -7,7 +7,7 @@
 #include "Stella.h"
 #include "BasePairSequence.h"
 #include "SharedGenedata.h"
-
+#include "BasePairSequenceLocator.h"
 // manage the main pipeline for an analysis of a basepair
 // sequence,which means search for the position the may
 // matched in a ref-genome such as hg19.fa, abandon
@@ -25,6 +25,13 @@ public:
 	HResult Filter();
 	HResult Diff();
 	AlignerResult* QueryResult();
+
+private:
+
+	BasePairSequence* bp_seq_;
+	SharedGeneData* gen_data_;
+	BasePairSequenceLocator* locator_;
+
 };
 
 #endif //STELLA_BASE_PAIR_ALIGNER_H_

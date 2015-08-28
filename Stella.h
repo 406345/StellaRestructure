@@ -3,6 +3,8 @@
 #ifndef STELLA_STELLA_H_
 #define STELLA_STELLA_H_
 
+#define DEBUG
+
 #define SAFE_DELETE(__x__) if(__x__ != nullptr) delete __x__
 
 const int MAX_BP_LINE_LENGTH = 300;
