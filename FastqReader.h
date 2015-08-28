@@ -20,10 +20,13 @@ public:
     FastqReader();
     ~FastqReader();
 
-    //Inherits from IDataReader
+    // Inherits from IDataReader
     virtual void Init() override;
     virtual void SetData(void * data) override;
     virtual void GetCount() override;
+
+    // Gets genome reads from fastq file 
+    // Return nullptr if there's no more reads
     virtual BasePairSequence * Next() override;
 
 private:
@@ -35,7 +38,7 @@ private:
     void TrimByQuality();
 
     // Gets genome reads(4 useable lines) from the .fastq file
-    void GetOneRead();
+    HResult GetOneRead();
     
     // Manages the operations and their order for process the sequence
     void ShapeAndClean();
