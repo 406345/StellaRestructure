@@ -26,20 +26,23 @@ BasePairIndex * BasePairSequenceLocator::Search(unsigned code)
         auto p = geneData_->base_pair_index()[cur_ * sizeof(BasePairIndex)];
         
         // Finds it and return the result
-        if (code == p->code) {
+        if (code == p->code) 
+        {
             return p;
         }
         
-        // Result maybe on the right leaf
+        // The result maybe on the right leaf
         // Find it
-        else if(code > p->code){
+        else if(code > p->code)
+        {
             //(tail_ - cur_) / 2
             cur_ += ((tail_ - cur_) >> 1);
         }
         
-        // Result maybe on the left leaf
+        // The result maybe on the left leaf
         // Find it
-        else {
+        else 
+        {
             tail_ = cur_;
             // cur_ / 2
             cur_ = cur_ >> 1;

@@ -143,6 +143,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="AlignerResultFileExporter.h" />
+    <ClInclude Include="BasePairCodeSample.h" />
     <ClInclude Include="BasePairSequence.h" />
     <ClInclude Include="BasePairSequenceAligner.h" />
     <ClInclude Include="BasePairSequenceDifferencesDetector.h" />
@@ -156,6 +157,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AlignerResultFileExporter.cpp" />
+    <ClCompile Include="BasePairCodeSample.cpp" />
     <ClCompile Include="BasePairSequence.cpp" />
     <ClCompile Include="BasePairSequenceAligner.cpp" />
     <ClCompile Include="BasePairSequenceDifferencesDetector.cpp" />

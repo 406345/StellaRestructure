@@ -32,6 +32,8 @@ private:
     SharedGeneData* gen_data_;
     BasePairSequenceLocator* locator_;
 
+
+
 };
 
 #endif //STELLA_BASE_PAIR_ALIGNER_H_

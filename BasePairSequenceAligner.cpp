@@ -19,8 +19,8 @@ void BasePairSequenceAligner::SetData(BasePairSequence * base_pair, SharedGeneDa
 
 HResult BasePairSequenceAligner::Search()
 {
+    // Keep the count, to speed up
     auto bp_seq_size = this->bp_seq_->codes_size();
-
     for (size_t i = 0; i < bp_seq_size; i++)
     {
         auto code = this->bp_seq_->codes()[i];
