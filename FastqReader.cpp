@@ -13,7 +13,6 @@ FastqReader::FastqReader()
     tmp_qual_sequence_ = nullptr;
 }
 
-
 FastqReader::~FastqReader()
 {
 }
@@ -30,6 +29,7 @@ void FastqReader::SetData(void * data)
     {    
         fastq_input_ = nullptr;
     }
+
     errno_t error_num = fopen_s(&fastq_input_, static_cast<char*>(data), "r");
     if (0 != error_num)
     {
@@ -47,13 +47,16 @@ void FastqReader::GetCount()
 // and then return it
 BasePairSequence * FastqReader::Next()
 {
-    GetOneRead();
+    if (HResult::kFAIL == GetOneRead())
+    {
+        return nullptr;
+    }
+
     ShapeAndClean();
     GenerateCurrentRead();
 
     return current_read_;
-    // correct the read counting
-    //if (read.size() >= this->minimun_read_len) this->c_total_read++;    
+    //TODO 
 }
 
 // Use only on  tmp_genome_sequence_
@@ -68,38 +71,45 @@ void FastqReader::ToUpperCase()
 // Trim by QUAL_CUTOFF defined in stella.h
 void FastqReader::TrimByQuality()
 {
-    int end = (*tmp_qual_sequence_).size() - 1;
+    size_t end = (*tmp_qual_sequence_).size() - 1;
+
     for (; end >= 1; end--)
     {
         if ((*tmp_qual_sequence_)[end] > QUAL_CUTOFF
             && (*tmp_qual_sequence_)[end - 1] > QUAL_CUTOFF)
         {
-            (*tmp_qual_sequence_) = (*tmp_qual_sequence_).substr(0, end);
-            (*tmp_genome_sequence_) = (*tmp_genome_sequence_).substr(0, end);
+            (*tmp_qual_sequence_) = (*tmp_qual_sequence_).substr(0, end + 1);
+            (*tmp_genome_sequence_) = (*tmp_genome_sequence_).substr(0, end + 1);
+            
             break;
         }
     }
-    if (end <= 1) {
+
+    if (end <= 1) 
+    {
         end = 1;
         (*tmp_qual_sequence_) = (*tmp_qual_sequence_).substr(0, end);
         (*tmp_genome_sequence_) = (*tmp_genome_sequence_).substr(0, end);
     }
 
-    int beg = 1;
-    for (; beg <= (*tmp_qual_sequence_).size() - 1; beg++) {
+    size_t beg = 0;
+    for (; beg <= (*tmp_qual_sequence_).size() - 2; beg++)
+    {
         if ((*tmp_qual_sequence_)[beg] > QUAL_CUTOFF
-            && (*tmp_qual_sequence_)[beg + 1] > QUAL_CUTOFF) {
+            && (*tmp_qual_sequence_)[beg + 1] > QUAL_CUTOFF) 
+        {
             (*tmp_qual_sequence_) = (*tmp_qual_sequence_).substr(beg, (*tmp_qual_sequence_).size() - beg);
             (*tmp_genome_sequence_) = (*tmp_genome_sequence_).substr(beg, (*tmp_genome_sequence_).size() - beg);
+            
             break;
         }
     }
 }
 
-void FastqReader::GetOneRead()
+HResult FastqReader::GetOneRead()
 {
     if (nullptr == fastq_input_)
-        return;
+        return HResult::kFAIL;
 
     // iterate on every line, alloc some buffer before doing alignment
     string * line;
@@ -107,48 +117,47 @@ void FastqReader::GetOneRead()
     char buffer[2000];
 
     //get 4 lines of a read
-    for (int lc = 0; lc < 4; lc++)
+    for (int line_num = 0; line_num < 4; line_num++)
     {
         //no more data in file
         if (nullptr == fgets(buffer, 1999, fastq_input_))
         {
-            break;
+            return HResult::kFAIL;
         }
+
         //get the line
         line = new string(buffer);
-        //line = string(buffer);
 
         // skip empty lines, would not be one in common
         if ('\n' == (*line)[0] || '\r' == (*line)[0])
         {
-            lc--;
+            line_num--;
             continue;
         }
 
-        // remove blanks
+        // Remove blanks
         (*line).erase(std::remove((*line).begin(), (*line).end(), '\n'), (*line).end());
         (*line).erase(std::remove((*line).begin(), (*line).end(), '\r'), (*line).end());
         (*line).erase(std::remove((*line).begin(), (*line).end(), ' '), (*line).end());
 
-        // fastq format, 0: read name, 1: read seq, 2: read name, 3: quals
-        if (((lc) % 4) == 0)
+        // Fastq format, 0: read name, 1: read seq, 2: read name, 3: quals
+        if (((line_num) % 4) == 0)
         {
-            //current_read_->set_read_name(line);
             tmp_read_name_ = line;
         }
 
-        if (((lc) % 4) == 1)
+        else if (((line_num) % 4) == 1)
         {
-            //current_read_->set_original_basepair(line);
             tmp_genome_sequence_ = line;
         }
-        if (((lc) % 4) == 3)
+        else if (((line_num) % 4) == 3)
         {
-            //current_read_->set_qual(line);
             tmp_qual_sequence_ = line;
         }
 
     }
+
+    return HResult::kSUCCESS;
 }
 
 void FastqReader::ShapeAndClean()
@@ -159,6 +168,7 @@ void FastqReader::ShapeAndClean()
 
 void FastqReader::GenerateCurrentRead()
 {
+    // Beaware of memory leaking!!!
     current_read_ = new BasePairSequence();
     current_read_->Init();
     current_read_->set_original_basepair(tmp_genome_sequence_);

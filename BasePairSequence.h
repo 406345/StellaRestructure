@@ -1,5 +1,9 @@
 // Copyright (c) 2015 Yhgenomics. All rights reserved.
 // Description:  class for genome sequence from fastq file
+// Creator: Shubo Yang
+// Date: 2015/08/27
+// Modified by Ke Yang 2015/08/28
+
 #ifndef STELLA_BASE_PAIR_H_
 #define STELLA_BASE_PAIR_H_
 
@@ -22,7 +26,6 @@ public:
     
     ~BasePairSequence();
     
-    // TODO non-trivial varialbes  
     void Init();
 
     // Releases memory and make the BasePairSequence Init again
@@ -89,12 +92,12 @@ private:
     // Sequence based on As, Cs, Gs, Ts and Ns
     void* original_basepair_;
 
-    //Name of the genome reads
+    // Name of the genome reads
     void* read_name_;
 
     size_t original_basepair_size_;
 
-    //compressed in the same way
+    // Compressed in the same way
     unsigned int * codes_;
     
     size_t codes_len_;
