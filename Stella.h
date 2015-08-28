@@ -9,6 +9,7 @@
 
 const int MAX_BP_LINE_LENGTH = 300;
 const int MAX_BP_LEN = 10;
+const int CODE_LEN = 3;
 const unsigned char QUAL_CUTOFF = 36;
 
 enum HResult
