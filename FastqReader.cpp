@@ -20,8 +20,7 @@ FastqReader::~FastqReader()
 
 void FastqReader::Init()
 {
-    current_read_ = new BasePairSequence();
-    current_read_->Init();
+    current_read_ = nullptr;
     fastq_input_ = nullptr;
 }
 
@@ -43,19 +42,21 @@ void FastqReader::GetCount()
 {
 }
 
-// fopen_s() method
-// SetData() method
+// File lines inputs to three tmp variables.
+// After data-cleaning work done, generate current_read_£¬
+// and then return it
 BasePairSequence * FastqReader::Next()
 {
     GetOneRead();
     ShapeAndClean();
-    UpdateCurrentRead();
+    GenerateCurrentRead();
 
     return current_read_;
     // correct the read counting
     //if (read.size() >= this->minimun_read_len) this->c_total_read++;    
 }
 
+// Use only on  tmp_genome_sequence_
 void FastqReader::ToUpperCase()
 {
     std::transform((*tmp_genome_sequence_).begin(),
@@ -64,6 +65,7 @@ void FastqReader::ToUpperCase()
         ::toupper);
 }
 
+// Trim by QUAL_CUTOFF defined in stella.h
 void FastqReader::TrimByQuality()
 {
     int end = (*tmp_qual_sequence_).size() - 1;
@@ -155,12 +157,14 @@ void FastqReader::ShapeAndClean()
     TrimByQuality();
 }
 
-void FastqReader::UpdateCurrentRead()
+void FastqReader::GenerateCurrentRead()
 {
-    current_read_->Reset();
+    current_read_ = new BasePairSequence();
+    current_read_->Init();
     current_read_->set_original_basepair(tmp_genome_sequence_);
     current_read_->set_qual(tmp_qual_sequence_);
     current_read_->set_read_name(tmp_read_name_);
+    current_read_->set_original_basepair_size(tmp_genome_sequence_)
 }
 
 

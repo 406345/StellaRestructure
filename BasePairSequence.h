@@ -4,6 +4,8 @@
 #define STELLA_BASE_PAIR_H_
 
 #include <string>
+#include "BasePairCodeSample.h"
+
 using namespace std;
 
 // BasePairSequence is the genome sequence and its quality 
@@ -15,7 +17,7 @@ class BasePairSequence
 {
 public:
     
-    // allocate sapce for genome sequences
+    // Allocate sapce for genome sequences
     BasePairSequence();
     
     ~BasePairSequence();
@@ -65,11 +67,19 @@ public:
         original_basepair_ = read;
     }
 
-    size_t original_basepair_size() { return original_basepair_size_; }
+    // Accessor for
+    const size_t original_basepair_size ()
+    { 
+        return original_basepair_size_; 
+    }
 
-    // Accessor compressed code in the same way of Compressed ref-genome
-    unsigned int const* codes() { return codes_; }
-    size_t codes_size(){ return codes_size_; }
+    // Mutators for genome sequence
+    void set_original_basepair_size(size_t in_size)
+    {
+        original_basepair_size_ = in_size;    
+    }
+
+    HResult ReadCode(BasePairCodeSample * CurrentCodes);
 
 private:
 
@@ -84,10 +94,13 @@ private:
 
     size_t original_basepair_size_;
 
-    //compressed in the same way to Hash table
+    //compressed in the same way
     unsigned int * codes_;
+    
+    size_t codes_len_;
 
-    size_t codes_size_;
+    size_t offset_;
+
 };
 
 #endif //STELLA_BASE_PAIR_H_

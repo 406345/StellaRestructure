@@ -1,6 +1,7 @@
 #include "BasePairSequence.h"
 #include <string>
 #include "Stella.h"
+#include "BasePairCodeSample.h"
 
 using namespace std;
 
@@ -25,7 +26,7 @@ void BasePairSequence::Init()
     codes_ = nullptr;
 
     original_basepair_size_ = 0;
-    codes_size_ = 0;
+    codes_len_ = 0;
 }
 
 void BasePairSequence::Reset()
@@ -35,9 +36,20 @@ void BasePairSequence::Reset()
     SAFE_DELETE(qual_);
     SAFE_DELETE(codes_);
     original_basepair_size_ = 0;
-    codes_size_ = 0;
+    codes_len_ = 0;
 }
 
 void BasePairSequence::ReverseComplement()
 {
+}
+
+HResult BasePairSequence::ReadCode(BasePairCodeSample * CurrentCodes)
+{
+    this->codes_len_ = this->original_basepair_size_ / MAX_BP_LEN;
+    this->codes_ = new unsigned int[this->codes_len_];
+    
+    //TODO make the codes base on the genome sequence
+    CurrentCodes->SetData(this->codes_, codes_len_, offset_);
+
+    return HResult::kSUCCESS;
 }

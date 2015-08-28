@@ -23,25 +23,27 @@ public:
 
 private:
 
-    //Makes all As, Cs, Gs, Ts and Ns to upper case 
+    // Makes all As, Cs, Gs, Ts and Ns to upper case 
     void ToUpperCase();
 
-    //Cuts less Quality head and tail sequence off by a threshold
-    //TODO add a file for const variables such as this threshold
+    // Cuts less Quality head and tail sequence off by a threshold
     void TrimByQuality();
 
-    //Gets genome reads(4 useable lines) from the .fastq file
+    // Gets genome reads(4 useable lines) from the .fastq file
     void GetOneRead();
     
     // Manages the operations and their order for process the sequence
     void ShapeAndClean();
 
-    void UpdateCurrentRead();
+    // Make a brand new BasePairSequence directly
+    void GenerateCurrentRead();
+
+    FILE * fastq_input_;
 
     BasePairSequence * current_read_;
     string * tmp_read_name_;
     string * tmp_genome_sequence_;
     string * tmp_qual_sequence_;
-    FILE * fastq_input_;
+
 };
 #endif
