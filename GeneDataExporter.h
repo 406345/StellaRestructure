@@ -19,7 +19,7 @@ public:
     ~GeneDataExporter();
 
     void ExportBasePairData(const char* file_name, void* data, size_t data_size);
-    void ExportDuplicate(const char* file_name, void* data, size_t data_size);
+    void ExportDuplicate(const char* file_name);
 
 private:
     

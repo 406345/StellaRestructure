@@ -9,7 +9,7 @@ BasePairSequenceDifferencesDetector::BasePairSequenceDifferencesDetector()
     std::memset(buf, 0, block_size * sizeof(int) * 7);
 
     score = matrix<int>(this->buf);
-    val      = matrix<int>(this->buf + block_size);
+    val   = matrix<int>(this->buf + block_size);
     idir  = matrix<int>(this->buf + block_size * 2);
     preV  = matrix<int>(this->buf + block_size * 3);
     preH  = matrix<int>(this->buf + block_size * 4);
@@ -28,7 +28,7 @@ inline void BasePairSequenceDifferencesDetector::clear()
     std::memset(buf, 0, MAX_BP_LINE_LENGTH * MAX_BP_LINE_LENGTH * sizeof(int) * 7);
 }
 
-inline int BasePairSequenceDifferencesDetector::NeedlemanWunsch(string & f1, string & f2, string & sequenceA, string & sequenceB, string & sequenceM, int gap_open, int gap_extn)
+int BasePairSequenceDifferencesDetector::NeedlemanWunsch(string & f1, string & f2, string & sequenceA, string & sequenceB, string & sequenceM, int gap_open, int gap_extn)
 {
     if (f1.size()>MAX_BP_LINE_LENGTH || f2.size()>MAX_BP_LINE_LENGTH) 
     {

@@ -15,17 +15,22 @@ void GeneDataExporter::ExportBasePairData(const char * file_name, void * data, s
     char* pdata = static_cast<char*>(data);
     char* pcur = pdata;
     int code_len = 0;
-    int code = 0;
-    int pos = 0;
+    unsigned int code = 0;
+    size_t pos = 0;
 
     for (size_t i = 0; i < data_size; i++)
     {
-        if (pcur[i] == '<')
+        if (i % 500000 == 0) 
         {
-            do { i++; pos++; } while (pcur[i] == '\n');
+            printf("Processed %f \r\n",((double)i/ (double)data_size)*100.0f);
+        }
+
+        if (pcur[i] == '>')
+        {
+            do { i++; pos++; } while (pcur[i] != '\n' || pcur[i] == '\r');
             continue;
         }
-        else if (pcur[i] == '\n')
+        else if (pcur[i] == '\n' || pcur[i] == '\r')
         {
             continue;
         }
@@ -36,6 +41,7 @@ void GeneDataExporter::ExportBasePairData(const char * file_name, void * data, s
 
             if (code_len == MAX_BP_LEN)
             {
+                
                 auto map_value = code_pos_map_.find(code);
                 if (map_value == code_pos_map_.end()) {
                     code_pos_map_.insert(make_pair(code, vector<size_t>()));
@@ -46,11 +52,15 @@ void GeneDataExporter::ExportBasePairData(const char * file_name, void * data, s
 
                 code_len = 0;
             }
+            else
+            {
+                code_len++;
+            }
         }
     }
 
     FILE* pfile;
-    auto error = fopen_s(&pfile, file_name, "r");
+    auto error = fopen_s(&pfile, file_name, "w+");
 
     if (error) {
 #ifdef DEBUG
@@ -80,10 +90,10 @@ void GeneDataExporter::ExportBasePairData(const char * file_name, void * data, s
     fclose(pfile);
 }
     
-void GeneDataExporter::ExportDuplicate(const char * file_name, void * data, size_t data_size)
+void GeneDataExporter::ExportDuplicate(const char * file_name)
 {
     FILE* pfile;
-    auto error = fopen_s(&pfile,file_name, "r");
+    auto error = fopen_s(&pfile,file_name, "w+");
     
     if (error) {
 #ifdef DEBUG

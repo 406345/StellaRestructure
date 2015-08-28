@@ -11,6 +11,10 @@ const int MAX_BP_LINE_LENGTH = 300;
 const int MAX_BP_LEN = 10;
 const int CODE_LEN = 3;
 const unsigned char QUAL_CUTOFF = 36;
+const int MINIMUN_HIT = 1;
+
+const int OPEN_GAP = -3;
+const int OPEN_EXTN = 0;
 
 enum HResult
 {

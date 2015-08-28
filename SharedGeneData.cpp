@@ -1,5 +1,7 @@
 #include "SharedGeneData.h"
-#include <stdio.h>
+#include <stdio.h> 
+
+SharedGeneData* SharedGeneData::instance_ = nullptr;
 
 SharedGeneData::SharedGeneData()
 {

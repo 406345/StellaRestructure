@@ -51,9 +51,7 @@ public:
         return buf[_x * this->dim_y + _y];
     }
 };
-
-
-
+ 
 // Detectes the differences of two base pair sequences
 // Needleman¨CWunsch algorithm
 class BasePairSequenceDifferencesDetector
@@ -64,11 +62,14 @@ public:
     ~BasePairSequenceDifferencesDetector();
 
     inline void clear();
-    inline int  NeedlemanWunsch(string& f1, string& f2,
-        string& sequenceA,
-        string& sequenceB,
-        string& sequenceM,
-        int gap_open, int gap_extn);
+    int NeedlemanWunsch(
+        string & f1, 
+        string & f2,
+        string & sequenceA,
+        string & sequenceB,
+        string & sequenceM,
+        int gap_open,
+        int gap_extn);
 
 private:
 
