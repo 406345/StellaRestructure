@@ -13,17 +13,17 @@ class BasePairSequenceLocator
 {
 public:
 
-	BasePairSequenceLocator();
-	~BasePairSequenceLocator();
+    BasePairSequenceLocator();
+    ~BasePairSequenceLocator();
 
-	void SetData(SharedGeneData* data);
-	BasePairIndex* Search(unsigned code);
+    void SetData(SharedGeneData* data);
+    BasePairIndex* Search(unsigned code);
 
 private:
 
-	SharedGeneData* geneData_;
-	int tail_;
-	int cur_;
+    SharedGeneData* geneData_;
+    int tail_;
+    int cur_;
 };
 
 #endif //BASE_PAIR_LOCATOR_H_

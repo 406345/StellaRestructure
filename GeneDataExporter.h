@@ -15,15 +15,15 @@ class GeneDataExporter
 {
 public:
 
-	GeneDataExporter();
-	~GeneDataExporter();
+    GeneDataExporter();
+    ~GeneDataExporter();
 
-	void ExportBasePairData(const char* file_name, void* data, size_t data_size);
-	void ExportDuplicate(const char* file_name, void* data, size_t data_size);
+    void ExportBasePairData(const char* file_name, void* data, size_t data_size);
+    void ExportDuplicate(const char* file_name, void* data, size_t data_size);
 
 private:
-	
-	std::map<int, vector<size_t> > code_pos_map_;
+    
+    std::map<int, vector<size_t> > code_pos_map_;
 };
 
 #endif //STELLA_GEN_DATA_EXPORTER_H_

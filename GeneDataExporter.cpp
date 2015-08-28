@@ -85,9 +85,9 @@ void GeneDataExporter::ExportDuplicate(const char * file_name, void * data, size
     
     if (error) {
 #ifdef DEBUG
-    	printf("create duplicate file fail...\r\n");
+        printf("create duplicate file fail...\r\n");
 #endif
-    	return;
+        return;
     }
     
     size_t count = 0;
@@ -95,13 +95,13 @@ void GeneDataExporter::ExportDuplicate(const char * file_name, void * data, size
     
     for (std::map<int, vector<size_t>>::iterator iter = code_pos_map_.begin(); iter != code_pos_map_.end(); iter++)
     {
-    	auto kv = *iter;
-    	for (auto e = kv.second.begin(); e != kv.second.end(); e++)
-    	{
-    		fwrite(&(*e), sizeof(size_t), 1, pfile);
-    	}
+        auto kv = *iter;
+        for (auto e = kv.second.begin(); e != kv.second.end(); e++)
+        {
+            fwrite(&(*e), sizeof(size_t), 1, pfile);
+        }
     
-    	count += kv.second.size();
+        count += kv.second.size();
     }
     
     fseek(pfile, 0, SEEK_SET);

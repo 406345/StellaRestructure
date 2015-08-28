@@ -17,20 +17,20 @@ class BasePairSequenceAligner
 {
 public:
 
-	BasePairSequenceAligner();
-	~BasePairSequenceAligner();
+    BasePairSequenceAligner();
+    ~BasePairSequenceAligner();
 
-	void SetData(BasePairSequence* base_pair, SharedGeneData* gen_data);
-	HResult Search();
-	HResult Filter();
-	HResult Diff();
-	AlignerResult* QueryResult();
+    void SetData(BasePairSequence* base_pair, SharedGeneData* gen_data);
+    HResult Search();
+    HResult Filter();
+    HResult Diff();
+    AlignerResult* QueryResult();
 
 private:
 
-	BasePairSequence* bp_seq_;
-	SharedGeneData* gen_data_;
-	BasePairSequenceLocator* locator_;
+    BasePairSequence* bp_seq_;
+    SharedGeneData* gen_data_;
+    BasePairSequenceLocator* locator_;
 
 };
 

@@ -14,5 +14,5 @@ void IDataReader::GetCount()
 
 BasePairSequence * IDataReader::Next()
 {
-	return nullptr;
+    return nullptr;
 }

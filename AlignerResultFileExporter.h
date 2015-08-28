@@ -12,12 +12,12 @@ class AlignerResultFileExporter : public IAlignerResultExporter
 {
 public:
 
-	AlignerResultFileExporter();
-	~AlignerResultFileExporter();
+    AlignerResultFileExporter();
+    ~AlignerResultFileExporter();
 
-	// inherit from IAlignerResultExporter
-	virtual void SetData(AlignerResult * result) override;
-	virtual void Export() override;
+    // inherit from IAlignerResultExporter
+    virtual void SetData(AlignerResult * result) override;
+    virtual void Export() override;
 };
 
 #endif //STELLA_ALIGNER_RESULT_FILE_EXPORTER_H_
