@@ -5,7 +5,8 @@
 
 #define DEBUG
 
-#define SAFE_DELETE(__x__) if(__x__ != nullptr) delete __x__
+#define SAFE_DELETE(__x__) { if((__x__) != nullptr) { delete (__x__); (__x__) = nullptr;} }
+#define SAFE_DELETE_ARRAY(__x__) { if((__x__) != nullptr ){ delete[] (__x__);  (__x__) = nullptr;} }
 
 const int MAX_BP_LINE_LENGTH = 300;
 const int MAX_BP_LEN = 10;
