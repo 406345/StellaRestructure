@@ -1,6 +1,8 @@
 #include "BasePairSequenceAligner.h"
 
 #include <string>
+#include <algorithm>
+#include <functional>
 
 #include "BasePairCodeSample.h"
 #include "BasePairSequenceDifferencesDetector.h"
@@ -66,13 +68,30 @@ HResult BasePairSequenceAligner::Diff()
     BasePairSequenceDifferencesDetector detector;
     string seqA, seqB, seqM;
 
+    size_t code_len = (bp_seq_->original_basepair_size()) / MAX_BP_LEN;
+
     for each (auto& kvp in search_result_)
     {
-        const char* head = this->gen_data_->standard_gen() + kvp.first;
-        const char* tail = this->gen_data_->standard_gen() + kvp.first + MAX_BP_LEN;
+        size_t head_offset = kvp.first - MAX_BP_LEN * (code_len - kvp.second);
+        size_t tail_offset = kvp.first + MAX_BP_LEN * code_len;
 
-        string ori_seq(head, tail - head);
-        string bp_seq(static_cast<const char*>(bp_seq_->original_basepair()), bp_seq_->original_basepair_size());
+        if (head_offset < 0) head_offset = 0;
+
+        if (tail_offset > this->gen_data_->standard_gen_size()) tail_offset = this->gen_data_->standard_gen_size();
+
+        const char* head = this->gen_data_->standard_gen() + head_offset;
+        const char* tail = this->gen_data_->standard_gen() + tail_offset;
+         
+        size_t ori_size = tail - head + 1;
+        size_t bp_size = bp_seq_->original_basepair_size();
+
+         
+
+        string ori_seq(head, bp_seq_->original_basepair_size());
+
+        string new_ori_seq = ori_seq.erase('\n');
+
+        string bp_seq = *((string*)bp_seq_->original_basepair());// (static_cast<const char*>(bp_seq_->original_basepair()), bp_seq_->original_basepair_size());
 
         // Diff two string with NeedlemanWunsch(dynamic programming)
         auto result = detector.NeedlemanWunsch(ori_seq, bp_seq, seqA, seqB, seqM, OPEN_GAP, OPEN_EXTN);
@@ -85,6 +104,13 @@ AlignerResult * BasePairSequenceAligner::QueryResult()
 {
     return nullptr;
 }
+
+
+bool vector_sort(const pair<size_t, int>& m1, const pair<size_t, int>& m2)
+{
+    return m1.second > m2.second;;
+}
+
 
 void BasePairSequenceAligner::SearchSingleSequence(BasePairSequence * seq, map<size_t, int>* map)
 {
@@ -113,7 +139,7 @@ void BasePairSequenceAligner::SearchSingleSequence(BasePairSequence * seq, map<s
                 auto relPos = pos - i * MAX_BP_LEN;
 
                 // Check if the item is already exist
-                if (map->find(relPos) == map->end())
+               if (map->find(relPos) == map->end())
                 {
                     map->insert(make_pair(relPos, 0));
                 }
@@ -124,7 +150,17 @@ void BasePairSequenceAligner::SearchSingleSequence(BasePairSequence * seq, map<s
     } while (1);
 
     vector<pair<size_t, int> > sort_pair(map->begin(), map->end());
-    QuickSort(&sort_pair, 0, sort_pair.size());
+    size_t sort_pair_size = sort_pair.size() - 1;
+    for (size_t i = sort_pair_size; i >0; i--)
+    {
+        if (sort_pair[i].second == 1) {
+            sort_pair.erase(sort_pair.begin()+i);
+        }
+    }
+
+    sort(sort_pair.begin(), sort_pair.end(), vector_sort);
+
+    //QuickSort(&sort_pair, 0, sort_pair.size() - 1);
     map->clear();
 
     for each (auto& kv in sort_pair)
@@ -132,7 +168,7 @@ void BasePairSequenceAligner::SearchSingleSequence(BasePairSequence * seq, map<s
         map->insert(make_pair(kv.first, kv.second));
     }
 }
-
+ 
 inline void BasePairSequenceAligner::QuickSort(vector<pair<size_t, int>> * data, size_t start, size_t end)
 {
     pair<size_t, int> t = (*data)[start];//哨兵，为开头的那个 
@@ -161,4 +197,3 @@ inline void BasePairSequenceAligner::QuickSort(vector<pair<size_t, int>> * data,
     QuickSort(data, start, b - 1);
     QuickSort(data, b + 1, end);
 }
- 

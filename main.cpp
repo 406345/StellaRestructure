@@ -7,6 +7,7 @@
 #include "BasePairSequence.h"
 #include "BasePairSequenceAligner.h"
 
+#include "vld.h"
 //#define YSB_DEBUG
 //#define TEST_BY_BIGCAT
 #ifdef TEST_BY_BIGCAT
@@ -14,6 +15,8 @@
 #include "FastqReader.h"
 #include "AlignerResultFileExporter.h"
 #include "Stella.h"
+
+
 
 #endif
 
@@ -94,6 +97,8 @@ void Run(char* genome_file, char* base_pair, char* duplicate_file, char* input_f
 
     do
     {
+        SAFE_DELETE(seq);
+
         seq = reader.Next();
 
         if (nullptr == seq)break;

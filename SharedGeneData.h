@@ -21,7 +21,7 @@ public:
     size_t standard_gen_size() { return standard_gen_size_; }
     BasePairIndex * base_pair_index() { return base_pair_index_; }
     size_t base_pair_index_size() { return base_pair_index_size_; }
-    unsigned int const * duplicates() { return duplicates_; }
+    size_t * duplicates() { return duplicates_; }
     size_t duplicates_size() { return duplicates_size_; };
      
     void Load(size_t genome_size, void* original_genome, size_t base_pair_size, void* base_pair, size_t duplicate_size, void* duplicate);
@@ -46,7 +46,7 @@ private:
     size_t standard_gen_size_;
     BasePairIndex* base_pair_index_;
     size_t base_pair_index_size_;
-    unsigned int* duplicates_;
+    size_t * duplicates_;
     size_t duplicates_size_;
 };
 

@@ -22,7 +22,7 @@ void SharedGeneData::Load(size_t genome_size, void * original_genome, size_t bas
     this->base_pair_index_ = static_cast<BasePairIndex*>(base_pair);
 
     this->duplicates_size_ = duplicate_size;
-    this->duplicates_ = (unsigned int*)duplicate;
+    this->duplicates_ = static_cast<size_t*>(duplicate);
 }
 
 void SharedGeneData::LoadFromFile(const char * genome_file, const char * base_pair_file, const char * duplicate_file)
@@ -85,6 +85,7 @@ void SharedGeneData::LoadFromFile(const char * genome_file, const char * base_pa
     // Copy file to memory
     void* buf_genome = (void*) new char[genome_size]();
     fread(buf_genome, sizeof(char), genome_size, file_genome);
+
     // Copy file to memory
     BasePairIndex* buf_bp = new BasePairIndex[bp_size]();
     fread_s(buf_bp, sizeof(BasePairIndex)*bp_size, sizeof(BasePairIndex), bp_size, file_bp);

@@ -39,6 +39,7 @@ private:
 
     void SearchSingleSequence(BasePairSequence* seq, map<size_t, int> * map);
     inline void QuickSort(vector<pair<size_t, int> > * data, size_t start, size_t end);
+
 };
 
 #endif //STELLA_BASE_PAIR_ALIGNER_H_
