@@ -4,7 +4,7 @@
 #include "Stella.h"
 #include "BasePairCodeSample.h"
 
-//#define DEBUG_ONLY
+#define DEBUG_ONLY
 
 using namespace std;
 
@@ -84,12 +84,14 @@ HResult BasePairSequence::ReadCode(BasePairCodeSample * CurrentCodes)
             cout << endl;
             cout <<"code number "<< codes_i << "  finished" << endl;
 #endif
-            
-            codes_i++;        
-            codes_[codes_i] = 0;
-            code_basepair_num = 0;
+
+            codes_i++;
+
             if (codes_len_ == codes_i)
                 break;
+
+            codes_[codes_i] = 0;
+            code_basepair_num = 0;
         }
     
     }
