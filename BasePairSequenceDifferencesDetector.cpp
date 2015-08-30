@@ -15,6 +15,10 @@ BasePairSequenceDifferencesDetector::BasePairSequenceDifferencesDetector()
     preH  = matrix<int>(this->buf + block_size * 4);
     jpV   = matrix<int>(this->buf + block_size * 5);
     jpH   = matrix<int>(this->buf + block_size * 6);
+
+    std::memset(seq1, 0, MAX_BP_LINE_LENGTH * sizeof(int));
+    std::memset(seq2, 0, MAX_BP_LINE_LENGTH * sizeof(int));
+    std::memset(j2i, 0, MAX_BP_LINE_LENGTH * sizeof(int));
 }
 
 
@@ -23,7 +27,7 @@ BasePairSequenceDifferencesDetector::~BasePairSequenceDifferencesDetector()
     SAFE_DELETE(buf);
 }
 
-inline void BasePairSequenceDifferencesDetector::clear()
+void BasePairSequenceDifferencesDetector::clear()
 {
     std::memset(buf, 0, MAX_BP_LINE_LENGTH * MAX_BP_LINE_LENGTH * sizeof(int) * 7);
 }
@@ -235,7 +239,6 @@ int BasePairSequenceDifferencesDetector::NeedlemanWunsch(string & f1, string & f
 
         if ((i>(f1.length() - 1)) && (j<(f2.length() - 1)))     // unaligned C on 1
         {
-            k = k + 1;
             
             if (k<buf_size) 
             {
@@ -244,11 +247,11 @@ int BasePairSequenceDifferencesDetector::NeedlemanWunsch(string & f1, string & f
                 sequenceM[k] = ' ';
             } 
 
+            k = k + 1;
             j = j + 1;
         }
         else if ((i<(f1.length() - 1)) && (j>(f2.length() - 1))) //Unaligned C on 2
         {
-            k = k + 1;
             
             if (k<buf_size) {
                 sequenceA[k] = seqW[seq1[i]];
@@ -256,11 +259,11 @@ int BasePairSequenceDifferencesDetector::NeedlemanWunsch(string & f1, string & f
                 sequenceM[k] = ' ';
             } 
 
+            k = k + 1;
             i = i + 1;
         }
         else if (i == j2i[j]) // If align
         {
-            k = k + 1;
 
             if (k<buf_size) {
                 sequenceA[k] = seqW[seq1[i]];
@@ -275,12 +278,12 @@ int BasePairSequenceDifferencesDetector::NeedlemanWunsch(string & f1, string & f
                 }
             }
 
+            k = k + 1;
             i = i + 1;
             j = j + 1;
         }
         else if (j2i[j]<0)   // Gap on 1
         {
-            k = k + 1;
 
             if (k<buf_size) 
             {
@@ -289,11 +292,11 @@ int BasePairSequenceDifferencesDetector::NeedlemanWunsch(string & f1, string & f
                 sequenceM[k] = 'D';
             }
 
+            k = k + 1;
             j = j + 1;
         }
         else if (j2i[j] >= 0)  // gap on 2
         {
-            k = k + 1;
             if (k<buf_size) 
             {
                 sequenceA[k] = seqW[seq1[i]];
@@ -301,6 +304,7 @@ int BasePairSequenceDifferencesDetector::NeedlemanWunsch(string & f1, string & f
                 sequenceM[k] = 'I';
             }
 
+            k = k + 1;
             i = i + 1;
         }
     }

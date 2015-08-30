@@ -61,7 +61,7 @@ public:
     BasePairSequenceDifferencesDetector();
     ~BasePairSequenceDifferencesDetector();
 
-    inline void clear();
+    void clear();
     int NeedlemanWunsch(
         string & f1, 
         string & f2,

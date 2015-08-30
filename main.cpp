@@ -8,15 +8,22 @@
 #include "BasePairSequenceAligner.h"
 
 #include "vld.h"
+
 //#define YSB_DEBUG
 //#define TEST_BY_BIGCAT
+
 #ifdef TEST_BY_BIGCAT
 
 #include "FastqReader.h"
 #include "AlignerResultFileExporter.h"
 #include "Stella.h"
 
+#endif 
 
+#ifdef YSB_DEBUG
+
+#include <string>
+#include "BasePairSequenceDifferencesDetector.h"
 
 #endif
 
@@ -28,7 +35,14 @@ int main(int argc, char* argv[])
     printf("BasePairIndex size :%d\r\n", sizeof(BasePairIndex));
     printf("unsigned in size :%d\r\n", sizeof(unsigned int));
     printf("size_t size :%d\r\n", sizeof(size_t));
-    scanf("");
+
+    string s1 = "*ATCGT";
+    string s2 = "*AGT";
+    string sa, sb, sm;
+    BasePairSequenceDifferencesDetector detector;
+    detector.clear();
+    auto ret = detector.NeedlemanWunsch(s1, s2, sa, sb, sm, -3, 0);
+
 #endif
     if (5 == argc && argv[1][0] == 'e')
     {

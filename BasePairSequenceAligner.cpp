@@ -80,18 +80,31 @@ HResult BasePairSequenceAligner::Diff()
         if (tail_offset > this->gen_data_->standard_gen_size()) tail_offset = this->gen_data_->standard_gen_size();
 
         const char* head = this->gen_data_->standard_gen() + head_offset;
-        const char* tail = this->gen_data_->standard_gen() + tail_offset;
          
-        size_t ori_size = tail - head + 1;
-        size_t bp_size = bp_seq_->original_basepair_size();
+        size_t size = bp_seq_->original_basepair_size();
 
+        if ((head_offset + size) > this->gen_data_->standard_gen_size()) size = this->gen_data_->standard_gen_size() - head_offset;
+
+        string ori_seq;
+
+        size_t end = size;
+        for (size_t i = 0; i < end; i++)
+        {
+            char c = *(head + i);
+
+            if (c == '\n') 
+            {
+                end++;
+            }
+            else
+            {
+                ori_seq += c;
+            }
+        }
          
+        string bp_seq = "*"+*((string*)bp_seq_->original_basepair());// (static_cast<const char*>(bp_seq_->original_basepair()), bp_seq_->original_basepair_size());
 
-        string ori_seq(head, bp_seq_->original_basepair_size());
-
-        string new_ori_seq = ori_seq.erase('\n');
-
-        string bp_seq = *((string*)bp_seq_->original_basepair());// (static_cast<const char*>(bp_seq_->original_basepair()), bp_seq_->original_basepair_size());
+        ori_seq = "*" + ori_seq;
 
         // Diff two string with NeedlemanWunsch(dynamic programming)
         auto result = detector.NeedlemanWunsch(ori_seq, bp_seq, seqA, seqB, seqM, OPEN_GAP, OPEN_EXTN);
