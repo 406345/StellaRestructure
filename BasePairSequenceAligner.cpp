@@ -65,56 +65,120 @@ HResult BasePairSequenceAligner::Diff()
 {
     if (search_result_.size() == 0)return kFAIL;
 
-    BasePairSequenceDifferencesDetector detector;
-    string seqA, seqB, seqM;
-
     size_t code_len = (bp_seq_->original_basepair_size()) / MAX_BP_LEN;
 
     for each (auto& kvp in search_result_)
     {
-        size_t head_offset = kvp.first - MAX_BP_LEN * (code_len - kvp.second);
-        size_t tail_offset = kvp.first + MAX_BP_LEN * code_len;
+        // Different is at the front of the code position
+        size_t offset = kvp.first - MAX_BP_LEN * (code_len - kvp.second);
 
-        if (head_offset < 0) head_offset = 0;
+        DiffResult result_front, result_back;
 
-        if (tail_offset > this->gen_data_->standard_gen_size()) tail_offset = this->gen_data_->standard_gen_size();
+        DiffSingleSequence(offset, kvp, code_len, &result_front);
 
-        const char* head = this->gen_data_->standard_gen() + head_offset;
-         
-        size_t size = bp_seq_->original_basepair_size();
+        // Different is at the back of the code position
+        offset = kvp.first;
 
-        if ((head_offset + size) > this->gen_data_->standard_gen_size()) size = this->gen_data_->standard_gen_size() - head_offset;
+        DiffSingleSequence(offset, kvp, code_len, &result_back);
 
-        string ori_seq;
+        ScoreDiff(&result_front);
+        ScoreDiff(&result_back);
 
-        size_t end = size;
-        for (size_t i = 0; i < end; i++)
-        {
-            char c = *(head + i);
+        DiffResult* result = new DiffResult();
 
-            if (c == '\n') 
-            {
-                end++;
-            }
-            else
-            {
-                ori_seq += c;
-            }
-        }
-         
-        string bp_seq = "*"+*((string*)bp_seq_->original_basepair());// (static_cast<const char*>(bp_seq_->original_basepair()), bp_seq_->original_basepair_size());
+        // Select the higher score 
+        auto higher_result = result_front.diff_score > result_back.diff_score ? result_front : result_back;
 
-        ori_seq = "*" + ori_seq;
+        result->diff = string(higher_result.diff);
+        result->diff_score = higher_result.diff_score;
+        result->hit_sequence = string(higher_result.hit_sequence);
+        result->original_sequence = string(higher_result.original_sequence);
+        result->position = higher_result.position;
 
-        // Diff two string with NeedlemanWunsch(dynamic programming)
-        auto result = detector.NeedlemanWunsch(ori_seq, bp_seq, seqA, seqB, seqM, OPEN_GAP, OPEN_EXTN);
+        diff_result_.push_back(result);
     }
 
     return kSUCCESS;
 }
 
+void BasePairSequenceAligner::DiffSingleSequence(size_t offset, pair<size_t,int> kvp, size_t code_len, DiffResult* result)
+{
+    BasePairSequenceDifferencesDetector detector;
+    string seqA, seqB, seqM;
+
+    size_t head_offset = offset;
+
+    if (head_offset < 0) head_offset = 0;
+
+    const char* head = this->gen_data_->standard_gen() + head_offset;
+
+    size_t size = bp_seq_->original_basepair_size();
+
+    if ((head_offset + size) > this->gen_data_->standard_gen_size()) size = this->gen_data_->standard_gen_size() - head_offset;
+
+    string ori_seq;
+
+    size_t end = size;
+    for (size_t i = 0; i < end; i++)
+    {
+        char c = *(head + i);
+
+        if (c == '\n')
+        {
+            end++;
+        }
+        else
+        {
+            ori_seq += c;
+        }
+    }
+
+    string bp_seq = "*" + *((string*)bp_seq_->original_basepair());// (static_cast<const char*>(bp_seq_->original_basepair()), bp_seq_->original_basepair_size());
+
+    ori_seq = "*" + ori_seq;
+
+    // Diff two string with NeedlemanWunsch(dynamic programming)
+    detector.NeedlemanWunsch(ori_seq, bp_seq, seqA, seqB, seqM, OPEN_GAP, OPEN_EXTN);
+
+    result->original_sequence = string(ori_seq);
+    result->hit_sequence = string(bp_seq);
+    result->diff = string(seqM);
+    result->position = offset;
+
+}
+
+int BasePairSequenceAligner::ScoreDiff(DiffResult* diff)
+{
+    int score = 0;
+
+    for (size_t i = 0; diff->diff[i] != '\0'; i++)
+    {
+        if (diff->diff[i] == SCORE_SAME_LETTER)
+        {
+            score++;
+        }
+        else
+        {
+            score--;
+        }
+    }
+
+    diff->diff_score = score;
+
+    return score;
+}
+
 AlignerResult * BasePairSequenceAligner::QueryResult()
 {
+    for each (auto& item in diff_result_)
+    {
+        printf_s("=================================\r\n");
+        printf_s("Orignal Sequence:%s\r\n", item->original_sequence.c_str()+1);
+        printf_s("Hit Sequence:    %s\r\n", item->hit_sequence.c_str() + 1);
+        printf_s("Difference:      %s\r\n", item->diff.c_str());
+        printf_s("Score:           %d\r\n", item->diff_score);
+        printf_s("Position:        %d\r\n", item->position);
+    }
     return nullptr;
 }
 
@@ -180,33 +244,4 @@ void BasePairSequenceAligner::SearchSingleSequence(BasePairSequence * seq, map<s
     {
         map->insert(make_pair(kv.first, kv.second));
     }
-}
- 
-inline void BasePairSequenceAligner::QuickSort(vector<pair<size_t, int>> * data, size_t start, size_t end)
-{
-    pair<size_t, int> t = (*data)[start];//哨兵，为开头的那个 
-    size_t f = start + 1;
-    size_t b = end; //f为前向指针，从s+1开始，b为反向指针，从e开始 
-    pair<size_t, int> m;
-    if (start >= end)return;//退出条件 
-
-    while (f <= b)
-    {
-        while (f <= b && (*data)[f].second <= t.second) f++;    //在前面找比哨兵大的元素 
-        while (f <= b && (*data)[b].second >= t.second) b--;    //在后面找比哨兵小的元素 
-                                            //交换这两个元素 
-        if (f<b) {
-            m = (*data)[f];
-            (*data)[f] = (*data)[b];
-            (*data)[b] = m;
-            f++;
-            b--;
-        }
-    }
-    //交换哨兵和r[b],r[b]肯定要比哨兵小 
-    (*data)[start] = (*data)[b];
-    (*data)[b] = t;
-    //排两边的 
-    QuickSort(data, start, b - 1);
-    QuickSort(data, b + 1, end);
 }

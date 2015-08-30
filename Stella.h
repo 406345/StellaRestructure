@@ -3,6 +3,8 @@
 #ifndef STELLA_STELLA_H_
 #define STELLA_STELLA_H_
 
+#include <string>
+
 #define DEBUG
 
 #define SAFE_DELETE(__x__) { if((__x__) != nullptr) { delete (__x__); (__x__) = nullptr;} }
@@ -17,6 +19,8 @@ const int MINIMUN_HIT = 1;
 const int OPEN_GAP = -3;
 const int OPEN_EXTN = 0;
 
+const char SCORE_SAME_LETTER = 'M';
+
 enum HResult
 {
     kSUCCESS = 0,
@@ -30,7 +34,7 @@ struct BasePairIndex
     size_t count;
 };
 
-struct BasePairDiffMaker
+struct BasePairDiffMarker
 {
     unsigned long ref_pos;
     char original_base_pair;
@@ -39,9 +43,17 @@ struct BasePairDiffMaker
 };
 
 struct AlignerResult {
-    BasePairDiffMaker* base_pair_diff_maker;
+    BasePairDiffMarker* base_pair_diff_maker;
     size_t diff_size;
     BasePairIndex* base_pair_index;
+};
+
+struct DiffResult {
+    std::string original_sequence;
+    std::string hit_sequence;
+    std::string diff;
+    int diff_score;
+    size_t position;
 };
 
 const unsigned int BitCodes[60] = \

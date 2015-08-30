@@ -24,7 +24,7 @@ void BasePairSequence::Init()
     read_name_ = nullptr;
     original_basepair_ = nullptr;
     qual_ = nullptr;    
-    codes_ = nullptr;
+    //codes_ = nullptr;
 
     original_basepair_size_ = 0;
     codes_len_ = 0;
@@ -36,7 +36,7 @@ void BasePairSequence::Reset()
     SAFE_DELETE(read_name_);
     SAFE_DELETE(original_basepair_);
     SAFE_DELETE(qual_);
-    SAFE_DELETE(codes_);
+    //SAFE_DELETE_ARRAY(codes_);
     original_basepair_size_ = 0;
     codes_len_ = 0;
     offset_ = 0;
@@ -54,7 +54,7 @@ HResult BasePairSequence::ReadCode(BasePairCodeSample * CurrentCodes)
     }
     
     this->codes_len_ = (this->original_basepair_size_-offset_) / MAX_BP_LEN;
-    this->codes_ = new unsigned int[this->codes_len_];
+    auto codes_ = new unsigned int[this->codes_len_];
     
 
     // Makes the codes base on the genome sequence
@@ -101,7 +101,7 @@ HResult BasePairSequence::ReadCode(BasePairCodeSample * CurrentCodes)
 #endif
 
     //TODO make the codes base on the genome sequence
-    CurrentCodes->SetData(this->codes_, codes_len_, offset_);
+    CurrentCodes->SetData(codes_, codes_len_, offset_);
     offset_++;
 
     return HResult::kSUCCESS;

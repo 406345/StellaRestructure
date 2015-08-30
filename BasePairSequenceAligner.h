@@ -12,6 +12,8 @@
 #include "SharedGenedata.h"
 #include "BasePairSequenceLocator.h"
 
+
+
 // manage the main pipeline for an analysis of a basepair
 // sequence,which means search for the position the may
 // matched in a ref-genome such as hg19.fa, abandon
@@ -36,10 +38,12 @@ private:
     SharedGeneData* gen_data_;
     BasePairSequenceLocator* locator_;
     map<size_t, int> search_result_;
+    vector<DiffResult*> diff_result_;
 
     void SearchSingleSequence(BasePairSequence* seq, map<size_t, int> * map);
-    inline void QuickSort(vector<pair<size_t, int> > * data, size_t start, size_t end);
+    void DiffSingleSequence(size_t offset, pair<size_t, int> kvp, size_t code_len, DiffResult* result);
 
+    int ScoreDiff(DiffResult* diff);
 };
 
 #endif //STELLA_BASE_PAIR_ALIGNER_H_
