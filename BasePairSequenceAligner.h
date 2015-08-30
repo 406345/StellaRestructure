@@ -41,7 +41,7 @@ private:
     vector<DiffResult*> diff_result_;
 
     void SearchSingleSequence(BasePairSequence* seq, map<size_t, int> * map);
-    void DiffSingleSequence(size_t offset, pair<size_t, int> kvp, size_t code_len, DiffResult* result);
+    void DiffSingleSequence(size_t offset, pair<size_t, int> kvp, DiffResult* result);
 
     int ScoreDiff(DiffResult* diff);
 };

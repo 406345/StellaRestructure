@@ -39,6 +39,64 @@ HResult BasePairSequenceAligner::Search()
     return kSUCCESS;
 }
 
+
+void BasePairSequenceAligner::SearchSingleSequence(BasePairSequence * seq, map<size_t, int>* map)
+{
+    do
+    {
+        BasePairCodeSample sample;
+
+        if (this->bp_seq_->ReadCode(&sample))break;
+
+        size_t code_len = sample.codes_len();
+
+        for (size_t i = 0; i < code_len; i++)
+        {
+            auto code = sample.codes()[i];
+
+            // Find the hit of code
+            auto ret = this->locator_->Search(code);
+
+            if (ret == nullptr)  continue;
+
+            for (size_t j = 0; j < ret->count; j++)
+            {
+                auto pos = *(this->gen_data_->duplicates() + ret->offset + j);
+
+                // Relative position to bp line's head position
+                auto relPos = pos - i * MAX_BP_LEN;
+
+                // Check if the item is already exist
+                if (map->find(relPos) == map->end())
+                {
+                    map->insert(make_pair(relPos, 0));
+                }
+
+                (*map)[relPos] = (*map)[relPos] + 1;
+            }
+        }
+    } while (1);
+
+    vector<pair<size_t, int> > sort_pair(map->begin(), map->end());
+    size_t sort_pair_size = sort_pair.size() - 1;
+    for (size_t i = sort_pair_size; i >0; i--)
+    {
+        if (sort_pair[i].second == 1) {
+            sort_pair.erase(sort_pair.begin() + i);
+        }
+    }
+
+    sort(sort_pair.begin(), sort_pair.end(), vector_sort);
+
+    //QuickSort(&sort_pair, 0, sort_pair.size() - 1);
+    map->clear();
+
+    for each (auto& kv in sort_pair)
+    {
+        map->insert(make_pair(kv.first, kv.second));
+    }
+}
+
 HResult BasePairSequenceAligner::Filter()
 {
     if (search_result_.size() == 0)return kFAIL;
@@ -65,35 +123,44 @@ HResult BasePairSequenceAligner::Diff()
 {
     if (search_result_.size() == 0)return kFAIL;
 
-    size_t code_len = (bp_seq_->original_basepair_size()) / MAX_BP_LEN;
-
     for each (auto& kvp in search_result_)
     {
-        // Different is at the front of the code position
-        size_t offset = kvp.first - MAX_BP_LEN * (code_len - kvp.second);
-
-        DiffResult result_front, result_back;
-
-        DiffSingleSequence(offset, kvp, code_len, &result_front);
-
-        // Different is at the back of the code position
-        offset = kvp.first;
-
-        DiffSingleSequence(offset, kvp, code_len, &result_back);
-
-        ScoreDiff(&result_front);
-        ScoreDiff(&result_back);
-
         DiffResult* result = new DiffResult();
+        memset(result, 0, sizeof(DiffResult));
+        result->diff_score = -INT_MAX;
 
-        // Select the higher score 
-        auto higher_result = result_front.diff_score > result_back.diff_score ? result_front : result_back;
+        size_t count = this->bp_seq_->code_len() > kvp.second ? this->bp_seq_->code_len() - kvp.second : 0;
+        for (size_t code_begin_pos = 0; code_begin_pos <= count; code_begin_pos++)
+        {
+            // Different is at the front of the code position
+            size_t offset = kvp.first - MAX_BP_LEN * (code_begin_pos);
 
-        result->diff = string(higher_result.diff);
-        result->diff_score = higher_result.diff_score;
-        result->hit_sequence = string(higher_result.hit_sequence);
-        result->original_sequence = string(higher_result.original_sequence);
-        result->position = higher_result.position;
+            DiffResult result_front, result_back;
+
+            DiffSingleSequence(offset, kvp, &result_front);
+
+            //// Different is at the back of the code position
+            //offset = kvp.first;
+
+            //DiffSingleSequence(offset, kvp, &result_back);
+
+            ScoreDiff(&result_front);
+
+            //// Select the higher score 
+            auto higher_result = result_front;// result_front.diff_score > result_back.diff_score ? result_front : result_back;
+
+            if (result->diff_score < higher_result.diff_score) 
+            {
+                result->diff = string(higher_result.diff);
+                result->diff_score = higher_result.diff_score;
+                result->hit_sequence = string(higher_result.hit_sequence);
+                result->original_sequence = string(higher_result.original_sequence);
+                result->position = higher_result.position;
+
+                result->original_sequence_trans = string(higher_result.original_sequence_trans);
+                result->hit_sequence_trans = string(higher_result.hit_sequence_trans);
+            }
+        }
 
         diff_result_.push_back(result);
     }
@@ -101,7 +168,7 @@ HResult BasePairSequenceAligner::Diff()
     return kSUCCESS;
 }
 
-void BasePairSequenceAligner::DiffSingleSequence(size_t offset, pair<size_t,int> kvp, size_t code_len, DiffResult* result)
+void BasePairSequenceAligner::DiffSingleSequence(size_t offset, pair<size_t,int> kvp, DiffResult* result)
 {
     BasePairSequenceDifferencesDetector detector;
     string seqA, seqB, seqM;
@@ -141,8 +208,10 @@ void BasePairSequenceAligner::DiffSingleSequence(size_t offset, pair<size_t,int>
     detector.NeedlemanWunsch(ori_seq, bp_seq, seqA, seqB, seqM, OPEN_GAP, OPEN_EXTN);
 
     result->original_sequence = string(ori_seq);
+    result->original_sequence_trans = string(seqA);
     result->hit_sequence = string(bp_seq);
-    result->diff = string(seqM);
+    result->hit_sequence_trans = string(seqB.substr(0, size));
+    result->diff = string(seqM.substr(0, size));
     result->position = offset;
 
 }
@@ -173,11 +242,13 @@ AlignerResult * BasePairSequenceAligner::QueryResult()
     for each (auto& item in diff_result_)
     {
         printf_s("=================================\r\n");
-        printf_s("Orignal Sequence:%s\r\n", item->original_sequence.c_str()+1);
-        printf_s("Hit Sequence:    %s\r\n", item->hit_sequence.c_str() + 1);
-        printf_s("Difference:      %s\r\n", item->diff.c_str());
-        printf_s("Score:           %d\r\n", item->diff_score);
-        printf_s("Position:        %d\r\n", item->position);
+        printf_s("Orignal Sequence: %s\r\n", item->original_sequence.c_str()+1);
+        //printf_s("Orignal Patch   : %s\r\n", item->original_sequence_trans.c_str());
+        printf_s("Hit Sequence:     %s\r\n", item->hit_sequence.c_str() + 1);
+        printf_s("Hit Patch:        %s\r\n", item->hit_sequence_trans.c_str());
+        printf_s("Difference:       %s\r\n", item->diff.c_str());
+        printf_s("Score:            %d\r\n", item->diff_score);
+        printf_s("Position:         %lld\r\n", item->position);
     }
     return nullptr;
 }
@@ -189,59 +260,3 @@ bool vector_sort(const pair<size_t, int>& m1, const pair<size_t, int>& m2)
 }
 
 
-void BasePairSequenceAligner::SearchSingleSequence(BasePairSequence * seq, map<size_t, int>* map)
-{
-    do
-    {
-        BasePairCodeSample sample;
-
-        if (this->bp_seq_->ReadCode(&sample))break;
-
-        size_t code_len = sample.codes_len();
-
-        for (size_t i = 0; i < code_len; i++)
-        {
-            auto code = sample.codes()[i];
-
-            // Find the hit of the code
-            auto ret = this->locator_->Search(code);
-
-            if (ret == nullptr)  continue;
-
-            for (size_t j = 0; j < ret->count; j++)
-            {
-                auto pos = *(this->gen_data_->duplicates() + ret->offset + j);
-
-                // Relative position to bp line's head position
-                auto relPos = pos - i * MAX_BP_LEN;
-
-                // Check if the item is already exist
-               if (map->find(relPos) == map->end())
-                {
-                    map->insert(make_pair(relPos, 0));
-                }
-
-                (*map)[relPos] = (*map)[relPos] + 1;
-            }
-        } 
-    } while (1);
-
-    vector<pair<size_t, int> > sort_pair(map->begin(), map->end());
-    size_t sort_pair_size = sort_pair.size() - 1;
-    for (size_t i = sort_pair_size; i >0; i--)
-    {
-        if (sort_pair[i].second == 1) {
-            sort_pair.erase(sort_pair.begin()+i);
-        }
-    }
-
-    sort(sort_pair.begin(), sort_pair.end(), vector_sort);
-
-    //QuickSort(&sort_pair, 0, sort_pair.size() - 1);
-    map->clear();
-
-    for each (auto& kv in sort_pair)
-    {
-        map->insert(make_pair(kv.first, kv.second));
-    }
-}

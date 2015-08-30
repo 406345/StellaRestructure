@@ -5,7 +5,7 @@
 
 #include <string>
 
-#define DEBUG
+//#define DEBUG
 
 #define SAFE_DELETE(__x__) { if((__x__) != nullptr) { delete (__x__); (__x__) = nullptr;} }
 #define SAFE_DELETE_ARRAY(__x__) { if((__x__) != nullptr ){ delete[] (__x__);  (__x__) = nullptr;} }
@@ -50,7 +50,9 @@ struct AlignerResult {
 
 struct DiffResult {
     std::string original_sequence;
+    std::string original_sequence_trans;
     std::string hit_sequence;
+    std::string hit_sequence_trans;
     std::string diff;
     int diff_score;
     size_t position;

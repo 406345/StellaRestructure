@@ -75,12 +75,17 @@ public:
     { 
         return original_basepair_size_; 
     }
+    
+    const size_t code_len() {
+        return codes_len_;
+    }
 
     // Mutators for genome sequence
     void set_original_basepair_size(size_t in_size)
     {
         original_basepair_size_ = in_size;    
     }
+
 
     HResult ReadCode(BasePairCodeSample * CurrentCodes);
 
