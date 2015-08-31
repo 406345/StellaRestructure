@@ -106,7 +106,8 @@ void BasePairSequenceAligner::SearchSingleSequence(BasePairSequence * seq, map<s
 // Remove useless( hit count != max_count)
 HResult BasePairSequenceAligner::Filter()
 {
-    if (search_result_.size() == 0)return kFAIL;
+    if (search_result_.size() == 0)
+		return kFAIL;
 
     // Copy search result to a temporary array 
     vector<pair<size_t, int> > buf(search_result_.begin(), search_result_.end());

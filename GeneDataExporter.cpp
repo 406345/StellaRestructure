@@ -22,13 +22,18 @@ void GeneDataExporter::ExportBasePairData(const char * file_name, void * data, s
     {
         if (i % 500000 == 0)
         {
-            printf("Processed %f \r\n", ((double)i / (double)data_size)*100.0f);
+            printf("Processed %f \r\n", ((double)i / (double)data_size) * 100.0f);
         }
 
         // Skip name line
         if (pcur[i] == '>')
         {
-            do { i++; pos++; } while (pcur[i] != '\n' || pcur[i] == '\r');
+            do 
+			{
+				i++; 
+				pos++; 
+			} while (pcur[i] != '\n' || pcur[i] == '\r');
+
             continue;
         }
         // Skip \n,\r character

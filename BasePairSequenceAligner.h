@@ -14,7 +14,7 @@
 #include "SharedGenedata.h"
 #include "BasePairSequenceLocator.h"
 
-// manage the main pipeline for an analysis of a basepair
+// Manage the main pipeline for an analysis of a basepair
 // sequence,which means search for the position the may
 // matched in a ref-genome such as hg19.fa, abandon
 // postions with less possibility ,and then measure 
