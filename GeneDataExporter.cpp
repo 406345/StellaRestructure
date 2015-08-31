@@ -20,9 +20,9 @@ void GeneDataExporter::ExportBasePairData(const char * file_name, void * data, s
 
     for (size_t i = 0; i < data_size; i++)
     {
-        if (i % 500000 == 0) 
+        if (i % 500000 == 0)
         {
-            printf("Processed %f \r\n",((double)i/ (double)data_size)*100.0f);
+            printf("Processed %f \r\n", ((double)i / (double)data_size)*100.0f);
         }
 
         // Skip name line
@@ -45,7 +45,7 @@ void GeneDataExporter::ExportBasePairData(const char * file_name, void * data, s
 
             if (code_len == MAX_BP_LEN)
             {
-                
+
                 auto map_value = code_pos_map_.find(code);
                 if (map_value == code_pos_map_.end()) {
                     code_pos_map_.insert(make_pair(code, vector<size_t>()));
@@ -55,7 +55,7 @@ void GeneDataExporter::ExportBasePairData(const char * file_name, void * data, s
                 code = 0;
 
                 code_len = 0;
-            } 
+            }
 
         }
     }
@@ -82,29 +82,29 @@ void GeneDataExporter::ExportBasePairData(const char * file_name, void * data, s
         index.code = kv.first;
         index.count = static_cast<size_t>(kv.second.size());
         index.offset = offset;
-        
+
         fwrite(&index, sizeof(BasePairIndex), 1, pfile);
         offset += kv.second.size();
     }
 
     fclose(pfile);
 }
-    
+
 void GeneDataExporter::ExportDuplicate(const char * file_name)
 {
     FILE* pfile;
-    auto error = fopen_s(&pfile,file_name, "wb+");
-    
+    auto error = fopen_s(&pfile, file_name, "wb+");
+
     if (error) {
 #ifdef DEBUG
         printf("create duplicate file fail...\r\n");
 #endif
         return;
     }
-    
+
     size_t count = 0;
     fwrite(&count, sizeof(size_t), 1, pfile);
-    
+
     for (std::map<int, vector<size_t>>::iterator iter = code_pos_map_.begin(); iter != code_pos_map_.end(); iter++)
     {
         auto kv = *iter;
@@ -112,12 +112,12 @@ void GeneDataExporter::ExportDuplicate(const char * file_name)
         {
             fwrite(&(*e), sizeof(size_t), 1, pfile);
         }
-    
+
         count += kv.second.size();
     }
-    
+
     fseek(pfile, 0, SEEK_SET);
     fwrite(&count, sizeof(size_t), 1, pfile);
-    
+
     fclose(pfile);
 }

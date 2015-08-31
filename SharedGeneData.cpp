@@ -15,19 +15,19 @@ SharedGeneData::~SharedGeneData()
 
 void SharedGeneData::Load(size_t genome_size, void * original_genome, size_t base_pair_size, void * base_pair, size_t duplicate_size, void * duplicate)
 {
-    this->standard_gen_size_ = genome_size;
-    this->standard_gen_ = static_cast<char*> (original_genome);
+    this->standard_gen_size_    = genome_size;
+    this->standard_gen_         = static_cast<char*> (original_genome);
 
     this->base_pair_index_size_ = base_pair_size;
-    this->base_pair_index_ = static_cast<BasePairIndex*>(base_pair);
+    this->base_pair_index_      = static_cast<BasePairIndex*>(base_pair);
 
-    this->duplicates_size_ = duplicate_size;
-    this->duplicates_ = static_cast<size_t*>(duplicate);
+    this->duplicates_size_      = duplicate_size;
+    this->duplicates_           = static_cast<size_t*>(duplicate);
 }
 
 void SharedGeneData::LoadFromFile(const char * genome_file, const char * base_pair_file, const char * duplicate_file)
 {
-    FILE * file_genome, * file_bp, * file_duplicate;
+    FILE * file_genome, *file_bp, *file_duplicate;
     size_t genome_size, bp_size, duplicate_size;
 
     genome_size = bp_size = duplicate_size = 0;
@@ -35,10 +35,10 @@ void SharedGeneData::LoadFromFile(const char * genome_file, const char * base_pa
     // Open genome file
     auto error = fopen_s(&file_genome, genome_file, "rb");
 
-    if (error) 
-    { 
+    if (error)
+    {
 #ifdef DEBUG
-        printf("open genome file error"); 
+        printf("open genome file error");
 #endif
         return;
     }
@@ -46,23 +46,23 @@ void SharedGeneData::LoadFromFile(const char * genome_file, const char * base_pa
     // Open base pair file
     error = fopen_s(&file_bp, base_pair_file, "rb");
 
-    if (error) 
-    { 
+    if (error)
+    {
 #ifdef DEBUG
         printf("open base pair file error");
 #endif
-        return; 
+        return;
     }
 
     // Open dupcate file
     error = fopen_s(&file_duplicate, duplicate_file, "rb");
 
-    if (error) 
-    { 
+    if (error)
+    {
 #ifdef DEBUG
         printf("open duplicate file error");
 #endif
-        return; 
+        return;
     }
 
     // Seek to end to read the length of file

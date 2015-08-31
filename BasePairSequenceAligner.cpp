@@ -21,7 +21,7 @@ BasePairSequenceAligner::~BasePairSequenceAligner()
 
 void BasePairSequenceAligner::SetData(BasePairSequence * base_pair, SharedGeneData * gen_data)
 {
-    this->bp_seq_   = base_pair;
+    this->bp_seq_ = base_pair;
     this->gen_data_ = gen_data;
 
     this->locator_->SetData(gen_data);
@@ -85,7 +85,7 @@ void BasePairSequenceAligner::SearchSingleSequence(BasePairSequence * seq, map<s
 
     vector<pair<size_t, int> > sort_pair(map->begin(), map->end());
     size_t sort_pair_size = sort_pair.size() - 1;
-    for (size_t i = sort_pair_size; i >0; i--)
+    for (size_t i = sort_pair_size; i > 0; i--)
     {
         if (sort_pair[i].second == 1) {
             sort_pair.erase(sort_pair.begin() + i);
@@ -117,7 +117,7 @@ HResult BasePairSequenceAligner::Filter()
     for each (auto& kv in buf)
     {
         // Pick out item which hit count less than Max hit and less than mininum hit
-        if (kv.second < hit_count || kv.second <= MINIMUN_HIT) 
+        if (kv.second < hit_count || kv.second <= MINIMUN_HIT)
         {
             search_result_.erase(kv.first);
         }
@@ -151,15 +151,15 @@ HResult BasePairSequenceAligner::Diff()
             // Select the higher score 
             auto higher_result = result_front;
 
-            if (result->diff_score < higher_result.diff_score) 
+            if (result->diff_score < higher_result.diff_score)
             {
-                result->diff                    = string(higher_result.diff);
-                result->diff_score              = higher_result.diff_score;
-                result->hit_sequence            = string(higher_result.hit_sequence);
-                result->original_sequence       = string(higher_result.original_sequence);
-                result->position                = higher_result.position;
+                result->diff = string(higher_result.diff);
+                result->diff_score = higher_result.diff_score;
+                result->hit_sequence = string(higher_result.hit_sequence);
+                result->original_sequence = string(higher_result.original_sequence);
+                result->position = higher_result.position;
                 result->original_sequence_trans = string(higher_result.original_sequence_trans);
-                result->hit_sequence_trans      = string(higher_result.hit_sequence_trans);
+                result->hit_sequence_trans = string(higher_result.hit_sequence_trans);
             }
         }
 
@@ -169,7 +169,7 @@ HResult BasePairSequenceAligner::Diff()
     return kSUCCESS;
 }
 
-void BasePairSequenceAligner::DiffSingleSequence(size_t offset, pair<size_t,int> kvp, DiffResult* result)
+void BasePairSequenceAligner::DiffSingleSequence(size_t offset, pair<size_t, int> kvp, DiffResult* result)
 {
     BasePairSequenceDifferencesDetector detector;
     string seqA, seqB, seqM;
@@ -208,12 +208,12 @@ void BasePairSequenceAligner::DiffSingleSequence(size_t offset, pair<size_t,int>
     // Diff two string with NeedlemanWunsch(dynamic programming)
     detector.NeedlemanWunsch(ori_seq, bp_seq, seqA, seqB, seqM, OPEN_GAP, OPEN_EXTN);
 
-    result->original_sequence       = string(ori_seq);
+    result->original_sequence = string(ori_seq);
     result->original_sequence_trans = string(seqA);
-    result->hit_sequence            = string(bp_seq);
-    result->hit_sequence_trans      = string(seqB.substr(0, size));
-    result->diff                    = string(seqM.substr(0, size));
-    result->position                = offset;
+    result->hit_sequence = string(bp_seq);
+    result->hit_sequence_trans = string(seqB.substr(0, size));
+    result->diff = string(seqM.substr(0, size));
+    result->position = offset;
 
 }
 
@@ -243,7 +243,7 @@ AlignerResult * BasePairSequenceAligner::QueryResult()
     for each (auto& item in diff_result_)
     {
         printf_s("///////////////////////////////////////////////////////////////\r\n");
-        printf_s("Orignal Sequence: %s\r\n", item->original_sequence.c_str()+1);
+        printf_s("Orignal Sequence: %s\r\n", item->original_sequence.c_str() + 1);
         printf_s("Hit Sequence:     %s\r\n", item->hit_sequence.c_str() + 1);
         printf_s("Hit Patch:        %s\r\n", item->hit_sequence_trans.c_str());
         printf_s("Difference:       %s\r\n", item->diff.c_str());
