@@ -22,6 +22,7 @@ public:
     // Inherit from IAlignerResultExporter
     virtual void SetData(AlignerResult * result) override;
     virtual void Export() override;
+
 private:
 
     AlignerResult * export_data_;

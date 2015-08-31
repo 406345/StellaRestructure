@@ -86,7 +86,6 @@ public:
         original_basepair_size_ = in_size;    
     }
 
-
     HResult ReadCode(BasePairCodeSample * CurrentCodes);
 
 private:
@@ -102,9 +101,6 @@ private:
 
     size_t original_basepair_size_;
 
-    // Compressed in the same way
-    //unsigned int * codes_;
-    
     size_t codes_len_;
 
     size_t offset_;

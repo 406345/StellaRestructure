@@ -1,11 +1,8 @@
 #include "AlignerResultFileExporter.h"
 
-
-
 AlignerResultFileExporter::AlignerResultFileExporter()
 {
 }
-
 
 AlignerResultFileExporter::~AlignerResultFileExporter()
 {
@@ -19,5 +16,4 @@ void AlignerResultFileExporter::SetData(AlignerResult * result)
 // Organized 
 void AlignerResultFileExporter::Export()
 {
-
 }

@@ -17,6 +17,7 @@ private:
     int dim_x = 0;
     int dim_y = 0;
     T* buf;     
+
     matrix(int _dimx, int _dimy)
     {
         this->dim_x = _dimx;
@@ -31,23 +32,27 @@ public:
     ~matrix() {}
     matrix() { buf = 0; }
 
-    matrix(T* _buf) {
+    matrix(T* _buf) 
+    {
         this->dim_x = MAX_BP_LINE_LENGTH;
         this->dim_y = MAX_BP_LINE_LENGTH;
         buf = _buf;
     }
 
     // Reset the ram
-    inline void clear(unsigned char _value = 0) {
+    inline void clear(unsigned char _value = 0) 
+    {
         std::memset(buf, _value, this->dim_x * this->dim_y * sizeof(T));
     }
 
     // Return the reference of a element
-    inline T& get(int _x, int _y) {
+    inline T& get(int _x, int _y) 
+    {
         return buf[_x * this->dim_y + _y];
     }
 
-    inline T& operator() (const int& _x, const int& _y) {
+    inline T& operator() (const int& _x, const int& _y) 
+    {
         return buf[_x * this->dim_y + _y];
     }
 };

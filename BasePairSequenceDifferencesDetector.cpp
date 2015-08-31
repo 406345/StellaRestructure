@@ -19,7 +19,6 @@ BasePairSequenceDifferencesDetector::BasePairSequenceDifferencesDetector()
     std::memset(j2i, 0, MAX_BP_LINE_LENGTH * sizeof(int));
 }
 
-
 BasePairSequenceDifferencesDetector::~BasePairSequenceDifferencesDetector()
 {
     SAFE_DELETE(buf);
@@ -112,9 +111,9 @@ int BasePairSequenceDifferencesDetector::NeedlemanWunsch(string & f1, string & f
     /* complexity: 100x100, CPU heavy! */
     int val1, val2;
     
-    for (j = 1; j<f2.length(); j++) 
+    for (j = 1; j < f2.length(); j++) 
     {
-        for (i = 1; i<f1.length(); i++) 
+        for (i = 1; i < f1.length(); i++) 
         {
             // D=VAL(i-1,j-1)+SCORE(i,j)--------------->
             D = val(i - 1, j - 1) + score(i, j);    // from diagonal, val(i,j) is val(i-1,j-1)
@@ -162,15 +161,15 @@ int BasePairSequenceDifferencesDetector::NeedlemanWunsch(string & f1, string & f
             preH(i, j) = H; // Unaccepted H
             preV(i, j) = V;    // Unaccepted V
 
-            if ((D>H) && (D>V)) 
+            if ( ( D > H ) && ( D > V ) ) 
             {
-                idir(i, j) = 1;
-                val(i, j) = D;
+                idir( i, j ) = 1;
+                val( i, j ) = D;
             }
-            else if (H > V) 
+            else if ( H > V ) 
             {
-                idir(i, j) = 2;
-                val(i, j) = H;
+                idir( i, j ) = 2;
+                val( i, j ) = H;
             }
             else 
             {
