@@ -39,6 +39,7 @@ void GeneDataExporter::ExportBasePairData(const char * file_name, void * data, s
             char value = pcur[i];
             code += (BitCodes[value - 'A'] << (code_len * CODE_LEN));
             code_len++;
+
             if (code_len == MAX_BP_LEN)
             {
                 
@@ -52,6 +53,7 @@ void GeneDataExporter::ExportBasePairData(const char * file_name, void * data, s
 
                 code_len = 0;
             } 
+
         }
     }
 

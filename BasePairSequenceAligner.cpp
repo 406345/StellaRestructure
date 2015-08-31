@@ -26,6 +26,7 @@ void BasePairSequenceAligner::SetData(BasePairSequence * base_pair, SharedGeneDa
     this->locator_->SetData(gen_data);
 }
 
+// Search all possible hit positions
 HResult BasePairSequenceAligner::Search()
 {
     if (nullptr == this->bp_seq_) return kFAIL;
@@ -101,6 +102,7 @@ void BasePairSequenceAligner::SearchSingleSequence(BasePairSequence * seq, map<s
     }
 }
 
+// Remove useless( hit count != max_count)
 HResult BasePairSequenceAligner::Filter()
 {
     if (search_result_.size() == 0)return kFAIL;
@@ -245,9 +247,8 @@ AlignerResult * BasePairSequenceAligner::QueryResult()
 {
     for each (auto& item in diff_result_)
     {
-        printf_s("=================================\r\n");
+        printf_s("///////////////////////////////////////////////////////////////\r\n");
         printf_s("Orignal Sequence: %s\r\n", item->original_sequence.c_str()+1);
-        //printf_s("Orignal Patch   : %s\r\n", item->original_sequence_trans.c_str());
         printf_s("Hit Sequence:     %s\r\n", item->hit_sequence.c_str() + 1);
         printf_s("Hit Patch:        %s\r\n", item->hit_sequence_trans.c_str());
         printf_s("Difference:       %s\r\n", item->diff.c_str());

@@ -7,8 +7,6 @@
 #include "BasePairSequence.h"
 #include "BasePairSequenceAligner.h"
 
-#include "vld.h"
-
 //#define YSB_DEBUG
 //#define TEST_BY_BIGCAT
 
@@ -119,9 +117,13 @@ void Run(char* genome_file, char* base_pair, char* duplicate_file, char* input_f
         
         BasePairSequenceAligner aligner;
         aligner.SetData(seq, SharedGeneData::instance());
+
         if (kFAIL == aligner.Search()) continue;
+
         if (kFAIL == aligner.Filter()) continue;
+
         if (kFAIL == aligner.Diff()) continue;
+
         aligner.QueryResult();
     } 
     while (1);

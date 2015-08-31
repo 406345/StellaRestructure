@@ -1,7 +1,5 @@
 #include "BasePairSequenceDifferencesDetector.h"
 
-
-
 BasePairSequenceDifferencesDetector::BasePairSequenceDifferencesDetector()
 {
     int block_size = MAX_BP_LINE_LENGTH * MAX_BP_LINE_LENGTH;

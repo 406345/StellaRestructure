@@ -30,7 +30,6 @@ BasePairIndex * BasePairSequenceLocator::Search(unsigned code)
         {
             return p;
         }
-        
         // The result maybe on the right leaf
         // Find it
         else if(code > p->code)
