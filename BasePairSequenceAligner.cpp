@@ -23,6 +23,7 @@ void BasePairSequenceAligner::SetData(BasePairSequence * base_pair, SharedGeneDa
 {
     this->bp_seq_   = base_pair;
     this->gen_data_ = gen_data;
+
     this->locator_->SetData(gen_data);
 }
 
@@ -145,26 +146,20 @@ HResult BasePairSequenceAligner::Diff()
 
             DiffSingleSequence(offset, kvp, &result_front);
 
-            //// Different is at the back of the code position
-            //offset = kvp.first;
-
-            //DiffSingleSequence(offset, kvp, &result_back);
-
             ScoreDiff(&result_front);
 
-            //// Select the higher score 
-            auto higher_result = result_front;// result_front.diff_score > result_back.diff_score ? result_front : result_back;
+            // Select the higher score 
+            auto higher_result = result_front;
 
             if (result->diff_score < higher_result.diff_score) 
             {
-                result->diff = string(higher_result.diff);
-                result->diff_score = higher_result.diff_score;
-                result->hit_sequence = string(higher_result.hit_sequence);
-                result->original_sequence = string(higher_result.original_sequence);
-                result->position = higher_result.position;
-
+                result->diff                    = string(higher_result.diff);
+                result->diff_score              = higher_result.diff_score;
+                result->hit_sequence            = string(higher_result.hit_sequence);
+                result->original_sequence       = string(higher_result.original_sequence);
+                result->position                = higher_result.position;
                 result->original_sequence_trans = string(higher_result.original_sequence_trans);
-                result->hit_sequence_trans = string(higher_result.hit_sequence_trans);
+                result->hit_sequence_trans      = string(higher_result.hit_sequence_trans);
             }
         }
 
@@ -206,19 +201,19 @@ void BasePairSequenceAligner::DiffSingleSequence(size_t offset, pair<size_t,int>
         }
     }
 
-    string bp_seq = "*" + *((string*)bp_seq_->original_basepair());// (static_cast<const char*>(bp_seq_->original_basepair()), bp_seq_->original_basepair_size());
+    string bp_seq = "*" + *((string*)bp_seq_->original_basepair());
 
     ori_seq = "*" + ori_seq;
 
     // Diff two string with NeedlemanWunsch(dynamic programming)
     detector.NeedlemanWunsch(ori_seq, bp_seq, seqA, seqB, seqM, OPEN_GAP, OPEN_EXTN);
 
-    result->original_sequence = string(ori_seq);
+    result->original_sequence       = string(ori_seq);
     result->original_sequence_trans = string(seqA);
-    result->hit_sequence = string(bp_seq);
-    result->hit_sequence_trans = string(seqB.substr(0, size));
-    result->diff = string(seqM.substr(0, size));
-    result->position = offset;
+    result->hit_sequence            = string(bp_seq);
+    result->hit_sequence_trans      = string(seqB.substr(0, size));
+    result->diff                    = string(seqM.substr(0, size));
+    result->position                = offset;
 
 }
 

@@ -25,17 +25,20 @@ void GeneDataExporter::ExportBasePairData(const char * file_name, void * data, s
             printf("Processed %f \r\n",((double)i/ (double)data_size)*100.0f);
         }
 
+        // Skip name line
         if (pcur[i] == '>')
         {
             do { i++; pos++; } while (pcur[i] != '\n' || pcur[i] == '\r');
             continue;
         }
+        // Skip \n,\r character
         else if (pcur[i] == '\n' || pcur[i] == '\r')
         {
             continue;
         }
         else
         {
+            // a code length equals 10 bps
             char value = pcur[i];
             code += (BitCodes[value - 'A'] << (code_len * CODE_LEN));
             code_len++;

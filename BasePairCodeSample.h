@@ -3,6 +3,7 @@
 // Creator: Shubo Yang
 // Date: 2015/08/28
 // Modified by Ke Yang 2015/08/28
+
 #ifndef STELLA_BASE_PAIR_CODE_SAMPLE_H_
 #define STELLA_BASE_PAIR_CODE_SAMPLE_H_
 

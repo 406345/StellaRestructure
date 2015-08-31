@@ -1,4 +1,8 @@
 // Copyright (c) 2015 Yhgenomics. All rights reserved.
+// Description:  Class for mapping shared memory
+// Creator: Shubo Yang
+// Date: 2015/08/27 
+
 #ifndef STELLA_SHARED_GEN_DATA_H_
 #define STELLA_SHARED_GEN_DATA_H_
 

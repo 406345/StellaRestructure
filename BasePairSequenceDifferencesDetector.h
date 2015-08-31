@@ -1,5 +1,8 @@
 // Copyright (c) 2015 Yhgenomics. All rights reserved.
-// Description:  class for difference detector
+// Description:  Needleman¨CWunsch algorithm
+// Creator: Shubo Yang
+// Date: 2015/08/27 
+
 #ifndef STELLA_BASE_PAIR_DIFFERENCE_DETECTOR_H_
 #define STELLA_BASE_PAIR_DIFFERENCE_DETECTOR_H_
 
