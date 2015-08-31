@@ -76,8 +76,8 @@ public:
         return original_basepair_size_; 
     }
     
-    const size_t code_len() {
-        return codes_len_;
+    const size_t max_code_len() {
+        return (this->original_basepair_size_) / MAX_BP_LEN;
     }
 
     // Mutators for genome sequence

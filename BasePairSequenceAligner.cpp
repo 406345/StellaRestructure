@@ -39,6 +39,10 @@ HResult BasePairSequenceAligner::Search()
     return kSUCCESS;
 }
 
+bool vector_sort(const pair<size_t, int>& m1, const pair<size_t, int>& m2)
+{
+    return m1.second > m2.second;;
+}
 
 void BasePairSequenceAligner::SearchSingleSequence(BasePairSequence * seq, map<size_t, int>* map)
 {
@@ -129,7 +133,7 @@ HResult BasePairSequenceAligner::Diff()
         memset(result, 0, sizeof(DiffResult));
         result->diff_score = -INT_MAX;
 
-        size_t count = this->bp_seq_->code_len() > kvp.second ? this->bp_seq_->code_len() - kvp.second : 0;
+        size_t count = this->bp_seq_->max_code_len() > kvp.second ? this->bp_seq_->max_code_len() - kvp.second : 0;
         for (size_t code_begin_pos = 0; code_begin_pos <= count; code_begin_pos++)
         {
             // Different is at the front of the code position
@@ -252,11 +256,4 @@ AlignerResult * BasePairSequenceAligner::QueryResult()
     }
     return nullptr;
 }
-
-
-bool vector_sort(const pair<size_t, int>& m1, const pair<size_t, int>& m2)
-{
-    return m1.second > m2.second;;
-}
-
 
