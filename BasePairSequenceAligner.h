@@ -1,5 +1,7 @@
 // Copyright (c) 2015 Yhgenomics. All rights reserved.
-// Description:  class for the Aligner
+// Description: Manage Aligner actions 
+// Creator: Shubo Yang
+// Date: 2015/08/27 
 
 #ifndef STELLA_BASE_PAIR_ALIGNER_H_
 #define STELLA_BASE_PAIR_ALIGNER_H_

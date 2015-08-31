@@ -1,4 +1,8 @@
 // Copyright (c) 2015 Yhgenomics. All rights reserved.
+// Description:  Exporter Class for Aligner reasult
+// Creator: Shubo Yang
+// Date: 2015/08/27 
+
 #ifndef STELLA_GEN_DATA_EXPORTER_H_
 #define STELLA_GEN_DATA_EXPORTER_H_
 
